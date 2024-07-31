@@ -1,0 +1,67 @@
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            margin-right: 8px;
+        }
+
+        /* Centered navigation links */
+        .navbar ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 500;
+        }
+
+        .navbar ul li a:hover {
+            color: #007bff;
+        }
+
+        /* Right side (Search and Profile) */
+        .navbar .actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .actions button {
+            background-color: #999999;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.3s ease;
+        }
+
+        .navbar .actions button img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .navbar .actions button:hover {
+            border-color: #ffffff;
+            background-color: #cccccc;
+        }
