@@ -1,0 +1,82 @@
+header{
+    margin-right:20px;
+}
+header a h1{
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    margin-left: 20px;
+}
+.title {
+    margin-left: 15px;
+}
+.heading {
+    margin-left: 20px;
+}
+div#icons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: auto;
+    margin: 0 20px;
+}
+.side-bar li a {
+    color: black;
+    padding: 10px 0;
+    margin: auto 20px;
+    font-weight: bold;
+    font-size: 15px;
+}
+.side-bar li a:hover {
+    color: black;
+    
+}
+li#profile {
+    padding: 0 10px;
+}
+li#profile a img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.info-card img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin-right:20px;
+}
+
+.info-card {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom:20px;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    white-space: nowrap; 
+    
+}
+
+.position,
+.followers {
+    font-size: 15px;
+    color: grey;
+    margin-bottom: 5px;
+}
+.profile-text{
+    margin-bottom:50px;
+}
+.profile-text h3{
+    font-size: 20px;
+    font-weight:bolder;
+    margin-bottom: 15px;
+}
+div.content{
+    margin-left:150px;
+}
