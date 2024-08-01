@@ -15,12 +15,15 @@
     <div class="navbar">
         <!-- Left side: Logo -->
         <div class="logo">
-            <img src="../Test/PIC/ITWorx_logo.png" alt="Logo" width="100" height="25">
+            <a href="../ITWorx/index.php">
+                <img src="../ITWorx/PIC/ITWorx_logo.png" alt="Logo" width="100" height="25">
+            </a>
         </div>
+
 
         <!-- Center: Navigation links -->
         <ul>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="../ITWorx/EmployeeNomination.php">Dashboard</a></li>
             <li><a href="#">Time Off</a></li>
             <li><a href="#">Benefits</a></li>
             <li><a href="#">Compensation</a></li>

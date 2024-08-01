@@ -40,7 +40,7 @@ body {
     padding: 10px 20px;
     margin: 0 4px;
     border: none;
-    background-color: rgba(0, 123, 255, 0.8); /* Slight transparency for better contrast */
+    background-color: #e74c3c;
     color: #fff;
     font-size: 1em;
     cursor: pointer;
@@ -48,7 +48,7 @@ body {
 }
 
 .buttons button:hover {
-    background-color: rgba(0, 86, 179, 0.8); /* Slight transparency for better contrast */
+    background-color: #c0392b; 
 }
 .recent-winners-container {
     margin-left: 20px;

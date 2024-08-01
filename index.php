@@ -11,15 +11,15 @@
 </head>
 
 <body>
-<?php include '../Test/navbar.php'; ?>
+    <?php include '../ITWorx/navbar.php'; ?>
 
     <div class="container" ba>
         <div class="header">
             <h1>Employee of the Month</h1>
             <p>Recognize your peers. Vote for your favorite. Celebrate the winners.</p>
             <div class="buttons">
-                <button>Nominate</button>
-                <button class="vote">Vote</button>
+                <button onclick="window.location.href='nominate.php'">Nominate</button>
+                <button>Vote</button>
             </div>
         </div>
         <div class="recent-winners-container">

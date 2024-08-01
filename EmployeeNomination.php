@@ -1,10 +1,14 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/EmployeeNominationCSS.css">
     <title> Employee Nomination </title>
 </head>
+
 <body>
+    <?php include '../ITWorx/navbar.php'; ?>
+
     <section class="leftSide">
         <ul class="navigation">
             <li style="background-color: rgb(231, 231, 231);">
@@ -29,7 +33,7 @@
     <main class="nomination">
         <h1>Nomination</h1>
         <small>Employees can nominate their collegues for employee of the month. Nominations are anonymous. You can also nominate
-                employees yourself
+            employees yourself
         </small>
         <div class="container" style="margin-top: 20px; margin-bottom: 10px;">
             <div>
@@ -45,39 +49,39 @@
         <h4>Current Nomination</h4>
         <div class="container"">
             <div>
-                <img class="photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
-            </div>
-            <div class="info">
-                <h4>Mohamed Tarek</h4>
-                <small>Nominated by: Mohamed Tarek</small>
-            </div>
+                <img class=" photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
+        </div>
+        <div class="info">
+            <h4>Mohamed Tarek</h4>
+            <small>Nominated by: Mohamed Tarek</small>
+        </div>
         </div>
         <div class="container" ">
             <div>
-                <img class="photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
-            </div>
-            <div class="info">
-                <h4>Mohamed Tarek</h4>
-                <small>Nominated by: Mohamed Tarek</small>
-            </div>
+                <img class=" photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
+        </div>
+        <div class="info">
+            <h4>Mohamed Tarek</h4>
+            <small>Nominated by: Mohamed Tarek</small>
+        </div>
         </div>
         <div class="container"">
             <div>
-                <img class="photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
-            </div>
-            <div class="info">
-                <h4>Mohamed Tarek</h4>
-                <small>Nominated by: Mohamed Tarek</small>
-            </div>
+                <img class=" photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
+        </div>
+        <div class="info">
+            <h4>Mohamed Tarek</h4>
+            <small>Nominated by: Mohamed Tarek</small>
+        </div>
         </div>
         <div class="container"">
             <div>
-                <img class="photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
-            </div>
-            <div class="info">
-                <h4>Mohamed Tarek</h4>
-                <small>Nominated by: Mohamed Tarek</small>
-            </div>
+                <img class=" photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
+        </div>
+        <div class="info">
+            <h4>Mohamed Tarek</h4>
+            <small>Nominated by: Mohamed Tarek</small>
+        </div>
         </div>
         <div>
             <button class="redButton" style="float:right; width:100px;">
@@ -90,39 +94,39 @@
         <h4>Previous Nomination</h4>
         <div class="container"">
             <div>
-                <img class="photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
-            </div>
-            <div class="info">
-                <h4>Mohamed Tarek</h4>
-                <small>Nominated by: Mohamed Tarek</small>
-            </div>
+                <img class=" photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
+        </div>
+        <div class="info">
+            <h4>Mohamed Tarek</h4>
+            <small>Nominated by: Mohamed Tarek</small>
+        </div>
         </div>
         <div class="container" ">
             <div>
-                <img class="photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
-            </div>
-            <div class="info">
-                <h4>Mohamed Tarek</h4>
-                <small>Nominated by: Mohamed Tarek</small>
-            </div>
+                <img class=" photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
+        </div>
+        <div class="info">
+            <h4>Mohamed Tarek</h4>
+            <small>Nominated by: Mohamed Tarek</small>
+        </div>
         </div>
         <div class="container"">
             <div>
-                <img class="photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
-            </div>
-            <div class="info">
-                <h4>Mohamed Tarek</h4>
-                <small>Nominated by: Mohamed Tarek</small>
-            </div>
+                <img class=" photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
+        </div>
+        <div class="info">
+            <h4>Mohamed Tarek</h4>
+            <small>Nominated by: Mohamed Tarek</small>
+        </div>
         </div>
         <div class="container"">
             <div>
-                <img class="photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
-            </div>
-            <div class="info">
-                <h4>Mohamed Tarek</h4>
-                <small>Nominated by: Mohamed Tarek</small>
-            </div>
+                <img class=" photo" alt="Profile Picture" src="PIC/profilePicture.jpg">
+        </div>
+        <div class="info">
+            <h4>Mohamed Tarek</h4>
+            <small>Nominated by: Mohamed Tarek</small>
+        </div>
         </div>
     </main>
 </body>
