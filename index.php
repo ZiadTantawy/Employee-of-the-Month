@@ -27,27 +27,35 @@
         </div>
 
         <div class="winners">
-            <div class="winner">
-                <img src='../Test/PIC/2.jpg' alt="John Smith">
-                <h3>John Smith</h3>
-                <p>Software Engineer</p>
-                <p>June 2023</p>
-            </div>
+            <a href="../ITWorx/NomineeProfile.php">
+                <div class="winner">
+                    <img src='../Test/PIC/2.jpg' alt="John Smith">
+                    <h3>John Smith</h3>
+                    <p>Software Engineer</p>
+                    <p>June 2023</p>
+                </div>
+            </a>
+            <a href="../ITWorx/NomineeProfile.php">
             <div class="winner">
                 <img src='../Test/PIC/3.jpg' alt="Jane Doe">
                 <h3>Jane Doe</h3>
                 <p>Product Manager</p>
                 <p>May 2023</p>
             </div>
+            </a>
+            <a href="../ITWorx/NomineeProfile.php">
             <div class="winner">
                 <img src='../Test/PIC/4.jpg' alt="Sam Johnson">
                 <h3>Sam Johnson</h3>
                 <p>UX Designer</p>
                 <p>April 2023</p>
             </div>
+            </a>
         </div>
     </div>
 
 </body>
+<?php include '../ITWorx/footer.php'; ?>
+
 
 </html>

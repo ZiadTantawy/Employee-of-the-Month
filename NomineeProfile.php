@@ -20,10 +20,10 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-card mt-4 d-flex align-items-center">
-                            <img src="../ITWorx/PIC/profilePic.jpg" class="card-img-top" alt="profile Picture">
+                            <img src="../ITWorx/PIC/2.jpg" class="card-img-top" alt="profile Picture">
                             <div class="text">
-                                <h3 class="name ml-3">Samantha Smith</h3>
-                                <p class="position ml-3">Software Product Designer @ Acme Inc</p>
+                                <h3 class="name ml-3">John Smith</h3>
+                                <p class="position ml-3">Software Product Designer @ ITWorx</p>
                                 <p class="followers ml-3">1.3k followers | 3.2k following</p>
                             </div>
                         </div>
@@ -41,5 +41,6 @@
         </div>
     </main>
 </body>
+<?php include '../ITWorx/footer.php'; ?>
 
 </html>

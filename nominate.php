@@ -40,5 +40,6 @@
         </section>
     </div>
 </body>
+<?php include '../ITWorx/footer.php'; ?>
 
 </html>

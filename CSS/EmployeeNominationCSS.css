@@ -1,79 +1,95 @@
-body{
+body {
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
 }
-.leftSide{
+
+.leftSide {
     font-size: 18px;
-    font-weight: 10;
     margin-right: 50px;
     height: auto;
     width: 20%;
-    float:left;
+    float: left;
     margin-top: 15px;
+}
 
-}
-.navigation{
+.navigation {
     list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
-.navigation li{
+
+.navigation li {
     margin-bottom: 5px;
     border-radius: 13px;
     width: 100%;
-    padding: 8px 0px 8px 10px ;
+    padding: 8px 10px; /* Simplified padding */
+    background-color: #f4f4f4; /* Add a background color for better visibility */
+    cursor: pointer;
 }
-.redButton{
-    padding: 10px 0px 10px 0px ;
-    margin-bottom: 0px;
+
+.navigation li:hover {
+    background-color: #e0e0e0; /* Add hover effect for better UX */
+}
+
+.redButton {
+    padding: 10px;
+    margin-bottom: 0;
     background-color: #e74c3c;
     color: white;
     border-radius: 13px;
     width: 18%;
     text-align: center;
     margin-left: 35px;
-    border-color: white; 
-    border-width: 0px;
+    border: none; /* Simplified border */
     font-weight: bold;
-}
-.redButton:hover{
-    background-color: #c0392b; 
+    cursor: pointer;
 }
 
+.redButton:hover {
+    background-color: #c0392b;
+}
 
-.nomination{
+.nomination {
     display: flex;
     flex-direction: column;
     font-size: 20px;
-    font-weight: 600px;
+    font-weight: 600;
     width: 75%;
     padding-top: 9px;
     height: auto;
     float: left;
-}
-h1,
-h2,
-h3,
-h4{
-    margin-bottom:10px;
+    margin-left: 10px; /* Add margin for separation from the left side */
 }
 
-.container{
-    margin-top: 15px;
-    margin-bottom: 0px;
-    float:none;
+h1, h2, h3, h4 {
+    margin-bottom: 10px;
 }
-.photo{
+
+.container {
+    margin-top: 15px;
+    margin-bottom: 0;
+    display: flex; /* Ensures content aligns horizontally */
+    align-items: center; /* Centers items vertically */
+}
+
+.photo {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    float: left;
     background-color: gray;
+    display: inline-block; /* Ensure it behaves like an image */
 }
-.info{
-    float: left;
+
+.info {
+    margin-left: 15px; /* Adds space between the image and text */
 }
-.info h4, .info small{
-    margin: 10px 0px 3px 5px;
+
+.info h4, .info small {
+    margin: 10px 0 3px 0;
 }
-small{
+
+small {
     color: gray;
 }
 
@@ -85,5 +101,6 @@ small{
     padding: 10px;
     white-space: nowrap;
     margin-bottom: 100px;
+    gap: 10px; /* Adds space between the containers */
 }
 
