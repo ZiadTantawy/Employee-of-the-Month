@@ -23,7 +23,7 @@
 
         <!-- Center: Navigation links -->
         <ul>
-            <li><a href="../ITWorx/EmployeeNomination.php">Dashboard</a></li>
+            <li><a href="#">Dashboard</a></li>
             <li><a href="#">Time Off</a></li>
             <li><a href="#">Benefits</a></li>
             <li><a href="#">Compensation</a></li>
@@ -39,6 +39,8 @@
             <button>
                 <i class="fa-solid fa-question"></i>
             </button>
+            <!-- <li id="profile"><a href=""><img src="../ITWorx/PIC/profilePic.jpg" /></a></li> -->
+
         </div>
     </div>
 

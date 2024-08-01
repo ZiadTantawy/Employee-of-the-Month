@@ -21,18 +21,22 @@ body{
     padding: 8px 0px 8px 10px ;
 }
 .redButton{
-    padding: 12px 0px 12px 0px ;
+    padding: 10px 0px 10px 0px ;
     margin-bottom: 0px;
-    background-color: red;
+    background-color: #e74c3c;
     color: white;
     border-radius: 13px;
     width: 18%;
     text-align: center;
-    margin-left: 50px;
+    margin-left: 35px;
     border-color: white; 
     border-width: 0px;
     font-weight: bold;
 }
+.redButton:hover{
+    background-color: #c0392b; 
+}
+
 
 .nomination{
     display: flex;
@@ -72,3 +76,14 @@ h4{
 small{
     color: gray;
 }
+
+
+.current {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+    white-space: nowrap;
+    margin-bottom: 100px;
+}
+
