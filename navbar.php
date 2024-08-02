@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Navigation Bar</title>
     <link rel="stylesheet" href="CSS/nav.css">
-
 </head>
 
 <body>
@@ -20,7 +19,6 @@
             </a>
         </div>
 
-
         <!-- Center: Navigation links -->
         <ul>
             <li><a href="#">Dashboard</a></li>
@@ -31,7 +29,7 @@
             <li><a href="#">Feedback</a></li>
         </ul>
 
-        <!-- Right side: Search and Profile -->
+        <!-- Right side: Search, Help, Profile, and Sign Up Icon -->
         <div class="actions">
             <button>
                 <i class="fas fa-search"></i>
@@ -39,11 +37,24 @@
             <button>
                 <i class="fa-solid fa-question"></i>
             </button>
-            <!-- <li id="profile"><a href=""><img src="../ITWorx/PIC/profilePic.jpg" /></a></li> -->
-
+            <button id="signup-icon" class="btn">
+                <i class="fas fa-user"></i> <!-- Sign Up Icon -->
+            </button>
         </div>
     </div>
 
 </body>
+<script>
+    var $loader = document.querySelector('.loader');
+    window.onload = function() {
+        $loader.classList.remove('loader--active');
+    };
+    document.querySelector('.btn').addEventListener('click', function() {
+        $loader.classList.add('loader--active');
+        setTimeout(function() {
+            window.location.href = 'login.php';
+        }, 2500); // 2 seconds delay
+    });
+</script>
 
 </html>

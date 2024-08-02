@@ -1,0 +1,91 @@
+@keyframes extend {
+    0% {
+      width: 200px;
+      height: 50px;
+      border-radius: 25px;
+      background: #c0392b;
+    }
+    100% {
+      width: 300px; /* Adjust to a more reasonable size */
+      height: 60px; /* Adjust height accordingly */
+      border-radius: 30px; /* Slightly more rounded */
+      background: #c0392b;
+    }
+  }
+  
+  @keyframes disappear {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes appear {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+  }
+  
+  button.btny {
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    background: #e74c3c;
+    border: 1px solid #e74c3c;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden; /* To hide the overflowing animation */
+  }
+  
+  button.btny:hover {
+    background-color: #c0392b;
+  }
+  
+  button.btny span {
+    margin-right: 10px;
+    z-index: 1; /* Ensure text stays above the image during animation */
+    transition: opacity 0.3s;
+  }
+  
+  button.btny img {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+  }
+  
+  button.btny:focus {
+    animation: extend 0.5s ease-in-out forwards; /* Adjust animation duration */
+  }
+  
+  button.btny:focus span {
+    animation: disappear 0.5s ease-in-out forwards;
+  }
+  
+  button.btny:focus img {
+    animation: appear 0.5s ease-in-out forwards; /* Sync with the extend animation */
+  }
+  

@@ -87,8 +87,29 @@ body {
     margin: 5px 0; /* Add a bit of space between paragraphs */
 }
 
-.winners a{
-    text-decoration: none;
-    color: black;
-
+/* Style for the button */
+.btn2, .btn3 , .btn4 {
+    border: none; /* Remove the border */
+    background: none; /* Remove any default background */
+    padding: 5; /* Remove default padding */
+    cursor: pointer; /* Change the cursor to a pointer */
+    display: inline-flex; /* Ensure the button fits around its content */
+    align-items: center; /* Center content vertically */
+    margin-bottom: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
+
+/* Style for the content inside the button */
+.btn2 , .btn3 , .btn4 .winner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #fff; /* Optional: background color for the content */
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: add shadow for depth */
+    padding: 15px; /* Optional: padding around content */
+}
+
+    

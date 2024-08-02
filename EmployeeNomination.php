@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/EmployeeNominationCSS.css">
     <title> Employee Nomination </title>
+    <link rel="stylesheet" href="CSS/loader.css">
+
 </head>
 
 <body>
     <?php include '../ITWorx/navbar.php'; ?>
+    <?php include '../ITWorx/loader.php'; ?>
+
 
     <section class="leftSide">
         <ul class="navigation">
@@ -37,7 +41,7 @@
         </small>
         <div class="container" style="margin-top: 20px; margin-bottom: 10px;">
             <div>
-                <button class="photo" onclick="window.location.href='nominate.php'" style="border-radius: 8px; background-color: rgb(231, 231, 231); text-align: center; font-size: 30px; line-height: 50px; border-color: white; border-width: 0px;">
+                <button class="photo" style="border-radius: 8px; background-color: rgb(231, 231, 231); text-align: center; font-size: 30px; line-height: 50px; border-color: white; border-width: 0px;">
                     +
                 </button>
             </div>
@@ -145,5 +149,17 @@
         </div>
 
     </main>
+    <script>
+        var $loader = document.querySelector('.loader');
+        window.onload = function() {
+            $loader.classList.remove('loader--active');
+        };
+        document.querySelector('.photo').addEventListener('click', function() {
+            $loader.classList.add('loader--active');
+            setTimeout(function() {
+                window.location.href = 'nominate.php';
+            }, 2500); // 2 seconds delay
+        });
+    </script>
 
 </body>
