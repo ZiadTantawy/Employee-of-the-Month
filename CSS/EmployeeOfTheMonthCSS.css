@@ -1,0 +1,44 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    display:flex;
+    flex-direction: row;
+}
+.item{
+    margin: 20px 0px 20px 60px;
+}
+small {
+    color: gray;
+}
+.container {
+    margin-top: 15px;
+    margin-bottom: 0;
+    display: flex; /* Ensures content aligns horizontally */
+    align-items: center; /* Centers items vertically */
+}
+
+.profilePhoto {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: gray;
+    display: inline-block; /* Ensure it behaves like an image */
+}
+.info {
+    margin-left: 15px; /* Adds space between the image and text */
+}
+
+.info h4, .info small {
+    margin: 10px 0 3px 0;
+}
+.prizePhoto{
+    width:100px;
+    height: 40px;
+    border-radius: 10%;
+    display: inline-block
+}
+.prizeDescribtion{
+    margin-right: 15px; /* Adds space between the image and text */
+    margin-left: 0px; /* Adds space between the image and text */
+    width:160px
+}
+

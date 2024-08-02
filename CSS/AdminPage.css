@@ -1,0 +1,116 @@
+div.view {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    margin-top:40px;
+}
+
+.view div.side-bar {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    align-items: start;
+}
+.view .side-bar ul{
+    padding: 0 0 30px 0;
+    
+}
+
+.view .side-bar ul li {
+    list-style: none;    
+    width: 100%;
+}
+.view .side-bar ul li:hover{
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.view .side-bar ul li a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+    margin: 5px;
+
+}
+.view .date-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.view .date {
+    margin-top: auto;
+}
+.view .dates{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-top: auto;
+    margin-left: 5px;
+    margin-bottom:40px;
+}
+.dates p.subtitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.dates p.pdate {
+    font-size: 15px;
+    margin: 0;
+    color: #979797;
+}
+
+.view .employee-votes {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.employee-votes h2, .employee-votes h4 {
+    margin-bottom: 40px;
+}
+
+.employee-votes .nominee {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.employee-votes .progress {
+    margin-bottom: 50px;
+}
+
+.employee-votes .nominee img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.employee-votes .nominee .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+.employee-votes a{
+    text-decoration: none;
+    color: black;
+}
+.nominee .text .name{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+.nominee .percent{
+    font-size: 15px;
+    margin: 0;
+    color: #979797;
+    margin-right: 50px;
+}
