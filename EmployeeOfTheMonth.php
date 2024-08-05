@@ -5,6 +5,8 @@
     <title> Employee Nomination </title>
 </head>
 <body>
+<?php include '../ITWorx/navbar.php'; ?>
+
     <main class="item">
         <h1>Employee Of the Month</h1>
         <small>Vote for your favorite employee</small>

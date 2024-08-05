@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Login</title>
     <link rel="stylesheet" href="CSS/loader.css">
-
-
     <style>
         /* Reset some default styles */
-        body,
-        h2,
-        form {
+        body, h2, form {
             margin: 0;
             padding: 0;
         }
@@ -24,18 +19,13 @@
             padding: 0;
         }
 
-
-
-        /* Adjust .content to fit below the fixed navbar */
         .content {
             margin-top: 60px;
-            /* Adjust this to fit the height of your navbar */
             margin-left: 500px;
             width: 100%;
             max-width: 400px;
         }
 
-        /* Wrapper Styling */
         .wrapper {
             background: #fff;
             padding: 20px;
@@ -43,7 +33,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Other styling */
         h2 {
             margin-bottom: 20px;
             text-align: center;
@@ -97,7 +86,6 @@
         }
     </style>
 </head>
-
 <body>
     <?php include('../ITWorx/navbar.php'); ?>
     <?php include '../ITWorx/loader.php'; ?>
@@ -105,9 +93,9 @@
     <div class="content">
         <div class="wrapper">
             <h2>Login</h2>
-            <form>
+            <form id="loginForm">
                 <div class="input-box">
-                    <input type="email" placeholder="Enter your email" name="email" id="email" required>
+                    <input type="text" placeholder="Enter your email" name="email" id="email" required>
                     <small class="error" id="emailError"></small>
                 </div>
                 <div class="input-box">
@@ -120,12 +108,27 @@
             </form>
         </div>
     </div>
-</body>
-<script>
-    var $loader = document.querySelector('.loader');
-    window.onload = function() {
-        $loader.classList.remove('loader--active');
-    };
-</script>
 
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            // Simple frontend validation
+            if (email === '1' && password === '1') {
+                localStorage.setItem('loggedIn', 'true');
+                window.location.href = 'index.php';
+            } else {
+                alert('Invalid email or password.');
+            }
+        });
+
+        // Handle loader animation
+        var $loader = document.querySelector('.loader');
+        window.onload = function() {
+            $loader.classList.remove('loader--active');
+        };
+    </script>
+</body>
 </html>

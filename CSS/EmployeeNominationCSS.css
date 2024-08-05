@@ -23,27 +23,40 @@ body {
     margin-bottom: 5px;
     border-radius: 13px;
     width: 100%;
-    padding: 8px 10px; /* Simplified padding */
-    background-color: #f4f4f4; /* Add a background color for better visibility */
+    padding: 8px 10px;
+    background-color: #f4f4f4;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.navigation li a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .navigation li:hover {
-    background-color: #e0e0e0; /* Add hover effect for better UX */
+    background-color: #e0e0e0;
 }
 
 .redButton {
     padding: 10px;
-    margin-bottom: 0;
     background-color: #e74c3c;
     color: white;
     border-radius: 13px;
     width: 18%;
     text-align: center;
     margin-left: 35px;
-    border: none; /* Simplified border */
+    margin-bottom: 15px;
+    border: none;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.redButton a {
+    text-decoration: none;
+    color: white;
 }
 
 .redButton:hover {
@@ -57,9 +70,8 @@ body {
     font-weight: 600;
     width: 75%;
     padding-top: 9px;
-    height: auto;
     float: left;
-    margin-left: 10px; /* Add margin for separation from the left side */
+    margin-left: 10px;
 }
 
 h1, h2, h3, h4 {
@@ -68,9 +80,8 @@ h1, h2, h3, h4 {
 
 .container {
     margin-top: 15px;
-    margin-bottom: 0;
-    display: flex; /* Ensures content aligns horizontally */
-    align-items: center; /* Centers items vertically */
+    display: flex;
+    align-items: center;
 }
 
 .photo {
@@ -78,23 +89,33 @@ h1, h2, h3, h4 {
     height: 60px;
     border-radius: 50%;
     background-color: gray;
-    display: inline-block; /* Ensure it behaves like an image */
+    display: inline-block;
+    text-align: center;
+    font-size: 30px;
+    line-height: 60px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.photo:hover {
+    background-color: #d3d3d3;
 }
 
 .info {
-    margin-left: 15px; /* Adds space between the image and text */
+    margin-left: 15px;
     width: 100px;
-    word-break: break-all;
 }
 
 .info h4, .info small {
-    margin: 10px 0 3px 0;
+    margin: 10px 0px 3px 0px;
+    white-space: nowrap;
+
 }
 
 small {
     color: gray;
 }
-
 
 .current {
     display: flex;
@@ -102,7 +123,8 @@ small {
     scroll-behavior: smooth;
     padding: 10px;
     white-space: nowrap;
-    margin-bottom: 100px;
-    gap: 10px; /* Adds space between the containers */
+    gap: 110px;
+    margin-bottom: 50px;
 }
+
 
