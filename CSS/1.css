@@ -55,39 +55,32 @@ body {
 .recent-winners-container {
     margin-left: 20px;
     margin-top: 50px;
-}
-
+  }
 .winners {
+    margin-top: 40px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
+    justify-content: space-around;
 }
-
 .winner {
-    flex: 1 1 30%; /* Each winner takes up 30% of the width */
-    max-width: 30%;
     padding: 10px;
-    box-sizing: border-box;
-    text-align: left;
+    text-align: left; /* Align text to the left */
 }
-
 .winner img {
     max-width: 100%;
-    border-radius: 10px;
+    width: 350px; /* Adjust the width as needed */
+    height: 350px; /* Adjust the height as needed */
+    border-radius: 10px; /* Rounded corners, but not a circle */
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Space between image and text */
 }
-
 .winner h3 {
     margin-top: 10px;
     font-size: 1.5em;
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* Add a bit of space below the heading */
 }
-
 .winner p {
     color: #777;
-    margin: 5px 0;
+    margin: 5px 0; /* Add a bit of space between paragraphs */
 }
 
 .btn2, .btn3, .btn4 {
