@@ -15,20 +15,21 @@ body {
     background-image: url('../PIC/1.jpg');
     border-radius: 25px;
     background-size: cover;
+    background-position: center;
     padding: 150px 50px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header h1, .header p {
-    color: white; /* Ensures text is visible on the background image */
-    
+    color: white;
 }
 
-.header h1{
+.header h1 {
     font-size: 48px;
 }
-.header p{
+
+.header p {
     font-size: 18px;
 }
 
@@ -48,68 +49,98 @@ body {
 }
 
 .buttons button:hover {
-    background-color: #c0392b; 
+    background-color: #c0392b;
 }
+
 .recent-winners-container {
     margin-left: 20px;
     margin-top: 50px;
-  }
-
+}
 
 .winners {
-    margin-top: 40px;
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 .winner {
+    flex: 1 1 30%; /* Each winner takes up 30% of the width */
+    max-width: 30%;
     padding: 10px;
-    text-align: left; /* Align text to the left */
+    box-sizing: border-box;
+    text-align: left;
 }
 
 .winner img {
     max-width: 100%;
-    width: 350px; /* Adjust the width as needed */
-    height: 350px; /* Adjust the height as needed */
-    border-radius: 10px; /* Rounded corners, but not a circle */
+    border-radius: 10px;
     display: block;
-    margin-bottom: 10px; /* Space between image and text */
+    margin-bottom: 10px;
 }
 
 .winner h3 {
     margin-top: 10px;
     font-size: 1.5em;
-    margin-bottom: 5px; /* Add a bit of space below the heading */
+    margin-bottom: 5px;
 }
 
 .winner p {
     color: #777;
-    margin: 5px 0; /* Add a bit of space between paragraphs */
+    margin: 5px 0;
 }
 
-/* Style for the button */
-.btn2, .btn3 , .btn4 {
-    border: none; /* Remove the border */
-    background: none; /* Remove any default background */
-    padding: 5; /* Remove default padding */
-    cursor: pointer; /* Change the cursor to a pointer */
-    display: inline-flex; /* Ensure the button fits around its content */
-    align-items: center; /* Center content vertically */
+.btn2, .btn3, .btn4 {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
     margin-bottom: 25px;
     margin-left: 5px;
     margin-right: 5px;
 }
 
-/* Style for the content inside the button */
-.btn2 , .btn3 , .btn4 .winner {
+.btn2 .winner, .btn3 .winner, .btn4 .winner {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background-color: #fff; /* Optional: background color for the content */
-    border-radius: 8px; /* Optional: rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: add shadow for depth */
-    padding: 15px; /* Optional: padding around content */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
 }
 
-    
+/* Responsive design for smaller screens */
+@media (max-width: 1200px) {
+    .winner {
+        flex: 1 1 45%; /* 2 items per row on medium screens */
+        max-width: 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 100px 20px;
+    }
+
+    .header h1 {
+        font-size: 36px;
+    }
+
+    .header p {
+        font-size: 16px;
+    }
+
+    .winners {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .winner {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
