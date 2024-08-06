@@ -1,18 +1,23 @@
-header{
-    margin-right:20px;
+/* General Styles */
+header {
+    margin-right: 20px;
 }
-header a h1{
+
+header a h1 {
     font-size: 20px;
     font-weight: bold;
     color: black;
     margin-left: 20px;
 }
+
 .title {
     margin-left: 15px;
 }
+
 .heading {
     margin-left: 20px;
 }
+
 div#icons {
     display: flex;
     justify-content: space-around;
@@ -20,6 +25,7 @@ div#icons {
     width: auto;
     margin: 0 20px;
 }
+
 .side-bar li a {
     color: black;
     padding: 10px 0;
@@ -27,13 +33,15 @@ div#icons {
     font-weight: bold;
     font-size: 15px;
 }
+
 .side-bar li a:hover {
     color: black;
-    
 }
+
 li#profile {
     padding: 0 10px;
 }
+
 li#profile a img {
     width: 50px;
     height: 50px;
@@ -44,7 +52,7 @@ li#profile a img {
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    margin-right:20px;
+    margin-right: 20px;
 }
 
 .info-card {
@@ -52,7 +60,7 @@ li#profile a img {
     align-items: center;
     flex-direction: row;
     width: 100%;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .name {
@@ -60,7 +68,6 @@ li#profile a img {
     font-weight: bold;
     margin-bottom: 5px;
     white-space: nowrap; 
-    
 }
 
 .position,
@@ -69,14 +76,123 @@ li#profile a img {
     color: grey;
     margin-bottom: 5px;
 }
-.profile-text{
-    margin-bottom:50px;
+
+.profile-text {
+    margin-bottom: 50px;
 }
-.profile-text h3{
+
+.profile-text h3 {
     font-size: 20px;
-    font-weight:bolder;
+    font-weight: bolder;
     margin-bottom: 15px;
 }
-div.content{
-    margin-left:150px;
+
+div.content {
+    margin-left: 150px;
+}
+
+/* Responsive Styles for Small Screens */
+@media screen and (max-width: 768px) {
+    /* General Layout Adjustments */
+    div.content {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    /* Header Styling */
+    header {
+        margin-right: 10px;
+    }
+
+    header a h1 {
+        font-size: 18px;
+        margin-left: 10px;
+    }
+
+    /* Sidebar Adjustments */
+    .side-bar {
+        display: none; /* Hide sidebar on small screens */
+    }
+
+    /* Icons Section */
+    div#icons {
+        margin: 0;
+    }
+
+    /* Info Card Adjustments */
+    .info-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .info-card img {
+        width: 100px;
+        height: 100px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .info-card .name {
+        font-size: 18px;
+    }
+
+    .info-card .position,
+    .info-card .followers {
+        font-size: 14px;
+    }
+
+    /* Profile Text Adjustments */
+    .profile-text h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    /* Adjustments for Links */
+    .side-bar li a {
+        font-size: 14px;
+        margin: auto 10px;
+    }
+
+    li#profile a img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* General Layout Adjustments */
+    div.content {
+        margin-left: 0;
+        padding: 5px;
+    }
+
+    /* Header Styling */
+    header a h1 {
+        font-size: 16px;
+        margin-left: 5px;
+    }
+
+    /* Sidebar Adjustments */
+    .side-bar li a {
+        font-size: 12px;
+        margin: auto 5px;
+    }
+
+    li#profile a img {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* Info Card Adjustments */
+    .info-card img {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Profile Text Adjustments */
+    .profile-text h3 {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
 }

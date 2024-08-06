@@ -1,120 +1,222 @@
+/* General Styles */
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
+/* Sidebar Styles */
 .leftSide {
-    font-size: 18px;
-    margin-right: 50px;
-    height: auto;
-    width: 20%;
-    float: left;
-    margin-top: 15px;
+    position: fixed;
+    top: 60px; /* Adjust based on navbar height */
+    left: 0;
+    width: 250px;
+    height: calc(100% - 60px); /* Adjust based on navbar height */
+    background-color: #f1f1f1;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+    z-index: 100;
 }
 
-.navigation {
-    list-style-type: none;
+.leftSide.collapsed {
+    width: 0;
+    overflow: hidden;
+}
+
+.leftSide .navigation {
     padding: 0;
     margin: 0;
+    list-style: none;
 }
 
-.navigation li {
-    margin-bottom: 5px;
-    border-radius: 13px;
-    width: 100%;
-    padding: 8px 10px;
-    background-color: #f4f4f4;
+.leftSide .navigation li {
+    padding: 15px 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.navigation li a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+.leftSide .navigation li.active,
+.leftSide .navigation li:hover {
+    background-color: #007bff;
+    color: #fff;
 }
 
-.navigation li:hover {
-    background-color: #e0e0e0;
-}
-
-.redButton {
+.leftSide .redButton {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: #ff4b4b;
+    color: white;
     padding: 10px;
-    background-color: #e74c3c;
-    color: white;
-    border-radius: 13px;
-    width: 18%;
-    text-align: center;
-    margin-left: 35px;
-    margin-bottom: 15px;
     border: none;
-    font-weight: bold;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 
-.redButton a {
-    text-decoration: none;
-    color: white;
+.leftSide.collapsed .redButton {
+    display: none;
 }
 
-.redButton:hover {
-    background-color: #c0392b;
+.leftSide .redButton:hover {
+    background-color: #ff1a1a;
 }
 
+/* Arrow Button */
+.arrow-toggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.arrow-toggle:hover {
+    color: #007bff;
+}
+
+/* Main Content Styles */
 .nomination {
-    display: flex;
-    flex-direction: column;
-    font-size: 20px;
-    font-weight: 600;
-    width: 75%;
-    padding-top: 9px;
-    float: left;
-    margin-left: 10px;
+    margin-left: 250px; /* Adjust based on sidebar width */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
 }
 
-h1, h2, h3, h4 {
+.leftSide.collapsed + .nomination {
+    margin-left: 0;
+}
+
+.nomination h1 {
+    font-size: 24px;
     margin-bottom: 10px;
 }
 
+.nomination small {
+    color: #666;
+}
+
 .container {
-    margin-top: 15px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
+    margin-bottom: 15px;
 }
 
-.photo {
+.container img.photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.container .info {
+    display: flex;
+    flex-direction: column;
+}
+
+.container .info h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.container .info small {
+    color: #999;
+}
+
+.redButton,
+.cancelButton {
+    background-color: #ff4b4b;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.cancelButton {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.redButton:hover {
+    background-color: #ff1a1a;
+}
+
+.cancelButton:hover {
+    background-color: #ddd;
+}
+
+/* Loader Styles */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s;
+}
+
+.loader--active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loader__icon {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
     width: 60px;
     height: 60px;
-    border-radius: 50%;
-    background-color: gray;
-    display: inline-block;
-    text-align: center;
-    font-size: 30px;
-    line-height: 60px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    animation: spin 1s linear infinite;
 }
 
-.photo:hover {
-    background-color: #d3d3d3;
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
 }
 
-.info {
-    margin-left: 15px;
-    width: 100px;
+.loader__tiles {
+    display: flex;
+    margin-top: 20px;
 }
 
-.info h4, .info small {
-    margin: 10px 0px 3px 0px;
-    white-space: nowrap;
-
+.loader__tile {
+    width: 10px;
+    height: 10px;
+    background: #3498db;
+    margin: 0 3px;
+    animation: bounce 1.2s infinite ease-in-out;
 }
 
-small {
-    color: gray;
+.loader__tile:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loader__tile:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1);
+    }
 }
 
 .current {
@@ -123,8 +225,68 @@ small {
     scroll-behavior: smooth;
     padding: 10px;
     white-space: nowrap;
-    gap: 110px;
-    margin-bottom: 50px;
+    gap: 20px;
 }
 
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .leftSide {
+        width: 200px;
+    }
 
+    .nomination {
+        margin-left: 200px;
+    }
+
+    .leftSide.collapsed + .nomination {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .leftSide {
+        width: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .leftSide.collapsed {
+        width: 0;
+    }
+
+    .nomination {
+        margin-left: 0;
+    }
+
+    .redButton {
+        display: none;
+    }
+
+    .arrow-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .container img.photo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .container .info h4 {
+        font-size: 14px;
+    }
+
+    .container .info small {
+        font-size: 12px;
+    }
+
+    .redButton, .cancelButton {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .nomination h1 {
+        font-size: 20px;
+    }
+}
