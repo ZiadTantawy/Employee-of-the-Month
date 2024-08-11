@@ -3,7 +3,7 @@ import "./CSS/EmployeeOfTheMonthCSS.css";
 
 export default function EmployeeCard(){
     return (
-        <div class="container">
+        <div class="container4">
                     <div>
                         <img class=" profilePhoto" alt="Profile Picture" src="PIC/profilePicture.jpg"/>
                     </div>

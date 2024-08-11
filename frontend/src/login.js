@@ -1,5 +1,5 @@
 import "./CSS/login.css";
-function Login() {
+const Login = () => {
   return (
     <div>
         <div class="content">
