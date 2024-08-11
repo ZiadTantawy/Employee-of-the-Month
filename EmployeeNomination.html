@@ -25,6 +25,11 @@
           />
         </a>
       </div>
+      <button class="arrow-toggle">&#9664;</button>
+      <!-- Burger icon -->
+      <div class="burger" id="burger-icon">
+        <i class="fas fa-bars"></i>
+      </div>
 
       <!-- Center: Navigation links -->
       <ul id="nav-links">
@@ -49,7 +54,14 @@
         </button>
       </div>
     </div>
-
+    <script>
+      document
+        .querySelector(".arrow-toggle")
+        .addEventListener("click", function () {
+          const sidebar = document.querySelector(".leftSide");
+          sidebar.classList.toggle("collapsed");
+        });
+    </script>
     <script>
       // Function to update the auth button based on login status
       function updateAuthButton() {
@@ -79,42 +91,34 @@
       // Run the function when the page loads
       document.addEventListener("DOMContentLoaded", updateAuthButton);
     </script>
+
+    <script>
+      document
+        .getElementById("burger-icon")
+        .addEventListener("click", function () {
+          var navLinks = document.getElementById("nav-links");
+          navLinks.classList.toggle("active");
+        });
+    </script>
   </body>
 
-  <body>
-    <div class="loader loader--active">
-      <div class="loader__icon"></div>
-      <div class="loader__tiles">
-        <div class="loader__tile"></div>
-        <div class="loader__tile"></div>
-        <div class="loader__tile"></div>
-        <div class="loader__tile"></div>
-        <div class="loader__tile"></div>
-      </div>
-    </div>
-    <!-- Loader (Initially Hidden) -->
 
+  <body>
+    <div class="sidebar-toggle">
+      <i class="fas fa-angle-left"></i>
+    </div>
     <section class="leftSide">
       <ul class="navigation">
-        <li style="background-color: rgb(231, 231, 231)">
-          <a>Nominations</a>
-        </li>
-        <li>
-          <a>Voting</a>
-        </li>
-        <li>
-          <a>Results</a>
-        </li>
-        <li>
-          <a>Settings</a>
-        </li>
+        <li class="active"><a>Nominations</a></li>
+        <li><a>Voting</a></li>
+        <li><a>Results</a></li>
+        <li><a>Settings</a></li>
       </ul>
-      <button class="redButton" style="bottom: 40px; position: fixed">
-        <a>New employee of the month</a>
-      </button>
+      <button class="redButton">New Employee of the Month</button>
     </section>
 
     <main class="nomination">
+
       <h1>Nomination</h1>
       <small
         >Employees can nominate their colleagues for employee of the month.
@@ -160,17 +164,8 @@
 
       <div>
         <br />
-        <button class="redButton" style="width: 100px">Save</button>
-        <button
-          class="redButton"
-          style="
-            width: 100px;
-            color: black;
-            background-color: rgb(231, 231, 231);
-          "
-        >
-          Cancel
-        </button>
+        <button class="redButton">Save</button>
+        <button class="cancelButton">Cancel</button>
         <br /><br />
       </div>
 
@@ -245,17 +240,40 @@
       </div>
     </main>
 
+    <div class="loader loader--active">
+      <div class="loader__icon"></div>
+      <div class="loader__tiles">
+        <div class="loader__tile"></div>
+        <div class="loader__tile"></div>
+        <div class="loader__tile"></div>
+        <div class="loader__tile"></div>
+        <div class="loader__tile"></div>
+      </div>
+    </div>
+    <!-- Loader (Initially Hidden) -->
+
     <script>
-      var loader = document.querySelector(".loader");
-      window.onload = function () {
-        loader.classList.remove("loader--active");
-      };
+      document
+        .querySelector(".sidebar-toggle")
+        .addEventListener("click", function () {
+          var leftSide = document.querySelector(".leftSide");
+          var toggleIcon = document.querySelector(".sidebar-toggle i");
+
+          leftSide.classList.toggle("collapsed");
+          toggleIcon.classList.toggle("fa-angle-left");
+          toggleIcon.classList.toggle("fa-angle-right");
+        });
+
       document.querySelector(".photo").addEventListener("click", function () {
-        loader.classList.add("loader--active");
+        document.querySelector(".loader").classList.add("loader--active");
         setTimeout(function () {
           window.location.href = "nominate.html";
         }, 2500);
       });
+
+      window.onload = function () {
+        document.querySelector(".loader").classList.remove("loader--active");
+      };
     </script>
   </body>
 </html>
