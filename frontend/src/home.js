@@ -6,6 +6,9 @@ const Home = () => {
   function Nomination() {
     window.location.href = "/nomination";
   }
+  function Vote() {
+    window.location.href = "/vote";
+  }
   return (
       <div className="wrapper">
         <div className="header">
@@ -15,7 +18,9 @@ const Home = () => {
             <button className="btnn" onClick={Nomination}>
               Nominate
             </button>
-            <button>Vote</button>
+            <button onClick={Vote}>
+              Vote
+            </button>
           </div>
         </div>
 
