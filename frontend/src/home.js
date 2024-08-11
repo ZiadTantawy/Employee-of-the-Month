@@ -3,15 +3,16 @@ import './CSS/home.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Home = () => {
-
+  function Nomination() {
+    window.location.href = "/nomination";
+  }
   return (
-
-      <div className="container wrapper">
+      <div className="wrapper">
         <div className="header">
           <h1>Employee of the Month</h1>
           <p>Recognize your peers. Vote for your favorite. Celebrate the winners.</p>
           <div className="buttons">
-            <button className="btnn">
+            <button className="btnn" onClick={Nomination}>
               Nominate
             </button>
             <button>Vote</button>
