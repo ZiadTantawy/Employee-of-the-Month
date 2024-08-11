@@ -6,7 +6,7 @@ export default function EmployeeOfTheMonthPage(){
    return (
     <>
     <NavBar/>
-    <body>
+    <body class="body">
         <Employees></Employees>
         <Prizes></Prizes>
     </body>
