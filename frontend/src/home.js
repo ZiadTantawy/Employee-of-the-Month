@@ -9,6 +9,9 @@ const Home = () => {
   function Vote() {
     window.location.href = "/vote";
   }
+  function Profile() {
+    window.location.href = "/profile";
+  }
   return (
       <div className="wrapper">
         <div className="header">
@@ -29,7 +32,7 @@ const Home = () => {
         </div>
 
         <div className="winners">
-          <button className="btn2">
+          <button className="btn2" onClick={Profile}>
             <div className="winner">
               <img src="./PIC/2.jpg" alt="John Smith" />
               <h3>John Smith</h3>
