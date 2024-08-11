@@ -1,8 +1,12 @@
 import React from 'react';
 import "./CSS/nav.css";
 import {Helmet} from "react-helmet";
+import Login from './login';
 
 const Navbar = () => {
+    function Login() {
+        window.location.href = "/login";
+    }
   return (
     <div className="navbar">
       {/* Left side: Logo */}
@@ -10,7 +14,7 @@ const Navbar = () => {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
       </Helmet>
       <div className="logo">
-        <a href="/index">
+        <a href="/">
           <img src="./PIC/ITWorx_logo.png" alt="Logo" width="100" height="25" />
         </a>
       </div>
@@ -30,7 +34,7 @@ const Navbar = () => {
             <button>
                 <i class="fa-solid fa-question"></i>
             </button>
-            <button id="auth-button" class="btn">
+            <button id="auth-button" class="btn" onClick={Login}>
                 <i class="fas fa-user"></i>
             </button>
         </div>

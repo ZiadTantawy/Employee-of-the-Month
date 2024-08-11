@@ -1,12 +1,11 @@
 import React from 'react';
-import './CSS/1.css';
-import './CSS/loader.css';
+import './CSS/home.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Home = () => {
 
   return (
-    <div>
+
       <div className="container wrapper">
         <div className="header">
           <h1>Employee of the Month</h1>
@@ -26,7 +25,7 @@ const Home = () => {
         <div className="winners">
           <button className="btn2">
             <div className="winner">
-              <img src="../Test/PIC/2.jpg" alt="John Smith" />
+              <img src="./PIC/2.jpg" alt="John Smith" />
               <h3>John Smith</h3>
               <p>Software Engineer</p>
               <p>June 2023</p>
@@ -34,7 +33,7 @@ const Home = () => {
           </button>
           <button className="btn3">
             <div className="winner">
-              <img src="../Test/PIC/3.jpg" alt="Jane Doe" />
+              <img src="./PIC/3.jpg" alt="Jane Doe" />
               <h3>Jane Doe</h3>
               <p>Product Manager</p>
               <p>May 2023</p>
@@ -42,7 +41,7 @@ const Home = () => {
           </button>
           <button className="btn4">
             <div className="winner">
-              <img src="../Test/PIC/4.jpg" alt="Sam Johnson" />
+              <img src="./PIC/4.jpg" alt="Sam Johnson" />
               <h3>Sam Johnson</h3>
               <p>UX Designer</p>
               <p>April 2023</p>
@@ -50,7 +49,6 @@ const Home = () => {
           </button>
         </div>
       </div>
-    </div>
   );
 };
 
