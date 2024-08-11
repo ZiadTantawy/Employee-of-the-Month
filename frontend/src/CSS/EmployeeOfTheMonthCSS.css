@@ -41,4 +41,8 @@ small {
     margin-left: 0px; /* Adds space between the image and text */
     width:160px
 }
+a:hover{
+    color: #007bff;
+    cursor: pointer;
+}
 
