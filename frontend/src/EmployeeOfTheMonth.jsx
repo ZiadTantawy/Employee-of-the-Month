@@ -5,7 +5,6 @@ import NavBar from "./navbar.js"
 export default function EmployeeOfTheMonthPage(){
    return (
     <>
-    <NavBar/>
     <body class="body">
         <Employees></Employees>
         <Prizes></Prizes>
