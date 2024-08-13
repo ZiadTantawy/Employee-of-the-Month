@@ -6,6 +6,7 @@ import Login from './login';
 import EmployeeOfTheMonthPage from './EmployeeOfTheMonth';
 import EmployeeNomination from './EmployeeNominationPage';
 import Nominate from './nominate';
+import Profile from './profile';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/nomination" element={<EmployeeNomination/>}/>
         <Route path="/vote" element={<EmployeeOfTheMonthPage/>}/>
         <Route path="nominate" element={<Nominate/>}/>
+        <Route path="profile" element={<Profile/>}/>
       </Routes>
     </Router>
   );
