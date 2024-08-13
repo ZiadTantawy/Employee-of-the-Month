@@ -1,5 +1,6 @@
 import './CSS/EmployeeNominationCSS.css'
 import Nominee from './Nominee';
+import Profile from './profile';
 export default function nominate(){
     function nominate(){
         window.location.href = "/nominate";
@@ -13,7 +14,7 @@ export default function nominate(){
                     Nominations are anonymous. You can also nominate employees
                     yourself.
                 </small>
-                <div class="container3" style={{"margin-top": "20px", "margin-bottom": "10px"}}>
+                <div class="nominationContainer" style={{"margin-top": "20px", "margin-bottom": "10px"}}>
                     <button
                     class="photo"
                     style={{"border-radius": "8px", "background-color": "rgb(231, 231, 231)", width:"40px", height:"40px", fontSize:"16px"}}
@@ -26,7 +27,7 @@ export default function nominate(){
                         <small>You can nominate up to 3 employees this month</small>
                     </div>
                 </div>
-                <Nominee/>
+            <Nominee/>
             <Nominee/>
             <Nominee/>
             <div>
