@@ -98,14 +98,14 @@ body {
     color: #666;
 }
 
-.container3 {
+.nominationContainer {
     margin-top: 10px;
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.container3 .photo {
+.nominationContainer .photo {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -113,17 +113,17 @@ body {
 }
 
 
-.container3 .info {
+.nominationContainer .info {
     display: flex;
     flex-direction: column;
 }
 
-.container3 .info h4 {
+.nominationContainer .info h4 {
     margin: 0;
     font-size: 16px;
 }
 
-.container3 .info small {
+.nominationContainer .info small {
     color: #999;
 }
 
@@ -269,16 +269,16 @@ body {
 }
 
 @media (max-width: 480px) {
-    .container3 img.photo {
+    .nominationContainer img.photo {
         width: 40px;
         height: 40px;
     }
 
-    .container3 .info h4 {
+    .nominationContainer .info h4 {
         font-size: 14px;
     }
 
-    .container3 .info small {
+    .nominationContainer .info small {
         font-size: 12px;
     }
 

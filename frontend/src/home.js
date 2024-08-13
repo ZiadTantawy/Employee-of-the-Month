@@ -3,37 +3,36 @@ import './CSS/home.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Home = () => {
-  function Nomination() {
+  function nominationScreen() {
     window.location.href = "/nomination";
   }
-
-  function Vote() {
+  function voteScreen() {
     window.location.href = "/vote";
   }
-  function Profile() {
+  function profilePage() {
     window.location.href = "/profile";
   }
   return (
-    <div className="wrapper">
-      <div className="header">
-        <h1>Employee of the Month</h1>
-        <p>Recognize your peers. Vote for your favorite. Celebrate the winners.</p>
-        <div className="buttons">
-          <button className="btnn" onClick={Nomination}>
-            Nominate
-          </button>
-          <button onClick={Vote}>
-            Vote
-          </button>
+      <div className="wrapper">
+        <div className="header">
+          <h1>Employee of the Month</h1>
+          <p>Recognize your peers. Vote for your favorite. Celebrate the winners.</p>
+          <div className="buttons">
+            <button className="btnn" onClick={nominationScreen}>
+              Nominate
+            </button>
+            <button onClick={voteScreen}>
+              Vote
+            </button>
+          </div>
         </div>
-      </div>
 
       <div className="recent-winners-container">
         <h2>Recent Winners</h2>
       </div>
 
         <div className="winners">
-          <button className="btn2" onClick={Profile}>
+          <button className="btn2" onClick={profilePage}>
             <div className="winner">
               <img src="./PIC/2.jpg" alt="John Smith" />
               <h3>John Smith</h3>
