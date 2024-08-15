@@ -1,5 +1,5 @@
 import psycopg2
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -20,16 +20,34 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def get_db_connection():
+    conn = psycopg2.connect(
+        dbname="your_db_name",
+        user="your_db_user",
+        password="your_db_password",
+        host="localhost",
+        port="5432"
+    )
+    return conn
+
 @app.get("/")
 def welcome():
     return {"message": "Welcome to ITWorx API"}
 
 @app.get("/winners")
 def get_recent_winners():
-    # Example data, you should fetch this from your database
-    winners = [
-        {"name": "John Smith", "role": "Software Engineer", "date": "June 2023", "image": "./PIC/2.jpg"},
-        {"name": "Jane Doe", "role": "Product Manager", "date": "May 2023", "image": "./PIC/3.jpg"},
-        {"name": "Sam Johnson", "role": "UX Designer", "date": "April 2029", "image": "./PIC/4.jpg"}
-    ]
-    return {"winners": winners}  
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT name, role, date, image FROM winners ORDER BY date DESC LIMIT 3;")
+        winners = cur.fetchall()
+        cur.close()
+        conn.close()
+
+        # Convert the fetched data into a list of dictionaries
+        result = [{"name": row[0], "role": row[1], "date": row[2], "image": row[3]} for row in winners]
+
+        return {"winners": result}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to fetch data from database")
