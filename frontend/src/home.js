@@ -4,23 +4,37 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Home = () => {
   const [winners, setWinners] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:8000/winners")
-      .then(response => response.json())
-      .then(data => setWinners(data.winners))
-      .catch(error => console.error('Error fetching winners:', error));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched winners:', data);
+        setWinners(data.winners || []);
+      })
+      .catch(error => {
+        console.error('Error fetching winners:', error);
+        setError('Failed to load recent winners. Please try again later.');
+      });
   }, []);
 
   function nominationScreen() {
     window.location.href = "/nomination";
   }
+
   function voteScreen() {
     window.location.href = "/vote";
   }
+
   function profilePage() {
     window.location.href = "/profile";
-  }  
+  }
 
   return (
     <div className="wrapper">
@@ -42,6 +56,7 @@ const Home = () => {
       </div>
 
       <div className="winners">
+        {error && <p className="error">{error}</p>}
         {winners.map((winner, index) => (
           <button key={index} className={`btn${index + 2}`} onClick={profilePage}>
             <div className="winner">
