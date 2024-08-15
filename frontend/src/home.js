@@ -20,7 +20,7 @@ const Home = () => {
   }
   function profilePage() {
     window.location.href = "/profile";
-  }
+  }  
 
   return (
     <div className="wrapper">
