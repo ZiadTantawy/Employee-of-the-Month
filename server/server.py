@@ -32,4 +32,4 @@ def get_recent_winners():
         {"name": "Jane Doe", "role": "Product Manager", "date": "May 2023", "image": "./PIC/3.jpg"},
         {"name": "Sam Johnson", "role": "UX Designer", "date": "April 2029", "image": "./PIC/4.jpg"}
     ]
-    return {"winners": winners}
+    return {"winners": winners}  
