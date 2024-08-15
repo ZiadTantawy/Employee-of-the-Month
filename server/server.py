@@ -1,7 +1,6 @@
-from fastapi import FastAPI, HTTPException, Request, Depends
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi.security import OAuth2PasswordBearer
 from starlette.middleware.sessions import SessionMiddleware
 import psycopg2
 import logging
@@ -37,6 +36,13 @@ app.add_middleware(
 class LoginData(BaseModel):
     username: str
     password: str
+
+class NominationData(BaseModel):
+    nominee_name: str
+    nominee_email: str
+    nomination_reason: str
+    your_name: str
+    your_email: str
 
 @app.get("/")
 def welcome():
@@ -76,3 +82,16 @@ def check_login_status(request: Request):
         return JSONResponse(content={"loggedIn": True}, status_code=200)
     else:
         return JSONResponse(content={"loggedIn": False}, status_code=401)
+
+@app.post("/nominate")
+def nominate(data: NominationData):
+    try:
+        cursor.execute("""
+            INSERT INTO nominations (nominee_name, nominee_email, nomination_reason, your_name, your_email)
+            VALUES (%s, %s, %s, %s, %s);
+        """, (data.nominee_name, data.nominee_email, data.nomination_reason, data.your_name, data.your_email))
+        connection.commit()
+        return JSONResponse(content={"message": "Nomination submitted successfully"}, status_code=200)
+    except Exception as e:
+        logging.error(f"Error during nomination: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
