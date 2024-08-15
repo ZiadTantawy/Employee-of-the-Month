@@ -1,18 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./CSS/nav.css";
 import { Helmet } from "react-helmet";
-import Login from './login';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLogin = () => {
-    window.location.href = "/login";
+  const handleLoginLogout = async () => {
+    if (isLoggedIn) {
+      await fetch("http://localhost:8000/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      setIsLoggedIn(false);
+      window.location.href = "/";
+    } else {
+      window.location.href = "/login";
+    }
   };
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      // Implement a way to check login status
+      // Example: Check if a session cookie is present or a token
+      try {
+        const response = await fetch("http://localhost:8000/check_login_status", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (response.status === 200) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error checking login status:", error);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
 
   return (
     <div className="navbar">
@@ -44,8 +75,8 @@ const Navbar = () => {
         <button>
           <i className="fa-solid fa-question"></i>
         </button>
-        <button id="auth-button" className="btn" onClick={handleLogin}>
-          <i className="fas fa-user"></i>
+        <button id="auth-button" className="btn" onClick={handleLoginLogout}>
+          <i className={`fas ${isLoggedIn ? 'fa-sign-out-alt' : 'fa-user'}`}></i>
         </button>
       </div>
     </div>

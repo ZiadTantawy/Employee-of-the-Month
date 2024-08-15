@@ -1,30 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CSS/login.css";
 
 const Login = () => {
+  const [error, setError] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const email = event.target.email.value;
+    const username = event.target.email.value;
     const password = event.target.password.value;
 
     try {
-      const response = await fetch("/login", {
+      const response = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
+        credentials: "include",
       });
 
       if (response.status === 200) {
         window.location.href = "/";
       } else {
-        // Handle errors here
-        console.error("Login failed");
+        const result = await response.json();
+        setError(result.message);
       }
     } catch (error) {
       console.error("Error:", error);
+      setError("An error occurred. Please try again.");
     }
   };
 
@@ -42,7 +46,6 @@ const Login = () => {
                 id="email"
                 required
               />
-              <small className="error" id="emailError"></small>
             </div>
             <div className="input-box">
               <input
@@ -52,11 +55,11 @@ const Login = () => {
                 id="password"
                 required
               />
-              <small className="error" id="passwordError"></small>
             </div>
             <div className="input-box button">
               <input type="submit" value="Login" />
             </div>
+            {error && <p className="error">{error}</p>}
           </form>
         </div>
       </div>
