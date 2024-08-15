@@ -5,6 +5,8 @@ import "./CSS/nominate2.css";
 const Nominate = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [emailExists, setEmailExists] = useState(null);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -14,7 +16,19 @@ const Nominate = () => {
     const nominationReason = event.target['nomination-reason'].value;
     const yourName = event.target['your-name'].value;
     const yourEmail = event.target['your-email'].value;
-
+    try {
+        const emailResponse = await fetch(`/check_email/${nomineeEmail}`);
+        const emailData = await emailResponse.json();
+        if (emailData.exists) {
+          setEmailExists(true);
+          return;
+        } else {
+          setEmailExists(false);
+        }
+      } catch (error) {
+        console.error("Error checking email:", error);
+        return;
+      }
     try {
       const response = await fetch("http://localhost:8000/nominate", {
         method: "POST",
@@ -32,6 +46,7 @@ const Nominate = () => {
       });
 
       if (response.status === 200) {
+        
         setSuccess("Nomination submitted successfully!");
         setError("");
       } else {
@@ -77,6 +92,7 @@ const Nominate = () => {
               <img src="https://i.cloudup.com/2ZAX3hVsBE-3000x3000.png" alt="Submit Icon"/>
             </button>
           </div>
+          {emailExists && <p className="error">Email already exists</p>}
           {error && <p className="error">{error}</p>}
           {success && <p className="success">{success}</p>}
         </form>

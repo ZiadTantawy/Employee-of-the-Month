@@ -95,3 +95,13 @@ def nominate(data: NominationData):
     except Exception as e:
         logging.error(f"Error during nomination: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+@app.get("/check_email/{email}")
+def check_email(email: str, request: Request):
+    try:
+        cursor.execute("SELECT 1 FROM nominations WHERE nominee_email = %s LIMIT 1;", (email,))
+        exists = cursor.fetchone() is not None
+        return JSONResponse(content={"exists": exists}, status_code=200)
+    except Exception as e:
+        logging.error(f"Error checking email: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
