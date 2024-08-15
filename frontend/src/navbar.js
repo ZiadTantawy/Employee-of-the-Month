@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./CSS/nav.css";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import Login from './login';
 
 const Navbar = () => {
-    function Login() {
-        window.location.href = "/login";
-    }
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogin = () => {
+    window.location.href = "/login";
+  };
+
   return (
     <div className="navbar">
-      {/* Left side: Logo */}
       <Helmet>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
       </Helmet>
@@ -19,25 +25,29 @@ const Navbar = () => {
         </a>
       </div>
 
-      {/* Center: Navigation links */}
-      <ul id="nav-links">
+      <div className={`burger ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
+        <i className="fas fa-bars"></i>
+      </div>
+
+      <ul id="nav-links" className={isMenuOpen ? 'active' : ''}>
         <li><a href="#">Time Off</a></li>
         <li><a href="#">Benefits</a></li>
         <li><a href="#">Compensation</a></li>
         <li><a href="#">Learning</a></li>
         <li><a href="#">Feedback</a></li>
       </ul>
-      <div class="actions">
-            <button>
-                <i class="fas fa-search"></i>
-            </button>
-            <button>
-                <i class="fa-solid fa-question"></i>
-            </button>
-            <button id="auth-button" class="btn" onClick={Login}>
-                <i class="fas fa-user"></i>
-            </button>
-        </div>
+
+      <div className="actions">
+        <button>
+          <i className="fas fa-search"></i>
+        </button>
+        <button>
+          <i className="fa-solid fa-question"></i>
+        </button>
+        <button id="auth-button" className="btn" onClick={handleLogin}>
+          <i className="fas fa-user"></i>
+        </button>
+      </div>
     </div>
   );
 };

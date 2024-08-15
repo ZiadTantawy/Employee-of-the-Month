@@ -27,9 +27,9 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="recent-winners-container">
-          <h2>Recent Winners</h2>
-        </div>
+      <div className="recent-winners-container">
+        <h2>Recent Winners</h2>
+      </div>
 
         <div className="winners">
           <button className="btn2" onClick={profilePage}>

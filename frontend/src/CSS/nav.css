@@ -1,142 +1,132 @@
+/* Mobile first: styles for all devices */
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
-    flex-wrap: wrap;
-  }
-  
-  .navbar .logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar .logo img {
-    margin-right: 8px;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.burger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  transition: max-height 0.3s ease;
+}
+
+.navbar ul li {
+  margin: 0 15px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #000000;
+  font-weight: 500;
+}
+
+.navbar .actions {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .actions button {
+  background-color: #999999;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* For screens smaller than 768px */
+@media (max-width: 768px) {
   .burger {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
+    display: block;
   }
-  
+
   .navbar ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex: 1;
-    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    max-height: 0;
+    overflow: hidden;
   }
-  
+
+  .navbar ul.active {
+    max-height: 300px; /* Ensure this height is enough to show all items */
+  }
+
   .navbar ul li {
-    margin: 0 15px;
-    text-align: center;
+    margin: 10px 0;
   }
-  
-  .navbar ul li a {
-    text-decoration: none;
-    color: #000000;
-    font-weight: 500;
-  }
-  
-  .navbar ul li a:hover {
-    color: #007bff;
-  }
-  
+
   .navbar .actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-top: 10px;
   }
-  
+}
+
+/* For screens smaller than 480px */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px;
+    flex-direction: column; /* Stack elements vertically */
+  }
+
+  .logo img {
+    width: 75px;
+    height: auto;
+  }
+
+  .navbar ul li {
+    margin: 8px 0;
+  }
+
+  .navbar ul li a {
+    font-size: 0.9em;
+  }
+
+  .navbar .actions {
+    margin-top: 5px;
+    justify-content: center;
+    width: 100%;
+  }
+
   .navbar .actions button {
-    background-color: #999999;
-    border: 1px solid #cccccc;
-    border-radius: 8px;
-    width: 40px;
-    height: 40px;
-    margin-left: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: border-color 0.3s ease;
+    width: 30px;
+    height: 30px;
   }
-  
-  .navbar .actions button img {
-    width: 24px;
-    height: 24px;
+}
+@media (max-width: 320px) {
+  .navbar {
+    padding: 5px;
   }
-  
-  .navbar .actions button:hover {
-    border-color: #ffffff;
-    background-color: #cccccc;
+
+  .burger {
+    font-size: 20px;
   }
-  
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      align-items: center;
-      padding: 10px;
-    }
-  
-    .burger {
-      display: block;
-    }
-  
-    .navbar ul {
-      flex-direction: column;
-      width: 100%;
-      align-items: center;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-  
-    .navbar ul.active {
-      max-height: 500px;
-    }
-  
-    .navbar ul li {
-      margin: 10px 0;
-    }
-  
-    .navbar .actions {
-      margin-top: 10px;
-      width: 100%;
-      justify-content: center;
-    }
+
+  .navbar ul {
+    max-height: 300px; /* Ensure enough space for all items */
   }
-  
-  @media (max-width: 480px) {
-    .navbar {
-      padding: 8px;
-    }
-  
-    .navbar .logo img {
-      width: 75px;
-      height: auto;
-    }
-  
-    .navbar ul {
-      align-items: center;
-    }
-  
-    .navbar ul li {
-      margin: 8px 0;
-    }
-  
-    .navbar ul li a {
-      font-size: 0.9em;
-    }
-  
-    .navbar .actions button {
-      width: 30px;
-      height: 30px;
-    }
+
+  .navbar ul li a {
+    font-size: 0.8em;
   }
-  
+
+  .navbar .actions button {
+    width: 25px;
+    height: 25px;
+  }
+}
