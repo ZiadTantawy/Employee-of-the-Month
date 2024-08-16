@@ -3,7 +3,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from db import connection
 from middleware import configure_middlewares
-from routes import auth, nominations, winners
+from routes import auth, nominations, winners, get_data
 
 app = FastAPI()
 
@@ -14,6 +14,7 @@ configure_middlewares(app)
 app.include_router(auth.router)
 app.include_router(nominations.router)
 app.include_router(winners.router)
+app.include_router(get_data.router)
 
 @app.get("/")
 def welcome():

@@ -17,10 +17,19 @@ const Nominate = () => {
     const yourName = event.target['your-name'].value;
     const yourEmail = event.target['your-email'].value;
     try {
-        const emailResponse = await fetch(`/check_email/${nomineeEmail}`);
+        const emailResponse = await fetch(`http://localhost:8000/check_email/${encodeURIComponent(nomineeEmail)}`, {
+          method:"GET",
+          headers:{
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+
         const emailData = await emailResponse.json();
+        
         if (emailData.exists) {
           setEmailExists(true);
+          setSuccess("");
           return;
         } else {
           setEmailExists(false);
@@ -92,7 +101,7 @@ const Nominate = () => {
               <img src="https://i.cloudup.com/2ZAX3hVsBE-3000x3000.png" alt="Submit Icon"/>
             </button>
           </div>
-          {emailExists && <p className="error">Email already exists</p>}
+          {emailExists && <p className="error" style={{color: "red"}}>Email already exists</p>}
           {error && <p className="error">{error}</p>}
           {success && <p className="success">{success}</p>}
         </form>

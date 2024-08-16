@@ -24,10 +24,10 @@ def nominate(data: NominationData):
     except Exception as e:
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-@router.get("/check_email/{email}")
-def check_email(email: str):
+@router.get("/check_email/{nomineeEmail}")
+def check_email(nomineeEmail: str):
     try:
-        cursor.execute("SELECT 1 FROM nominations WHERE nominee_email = %s LIMIT 1;", (email,))
+        cursor.execute("SELECT 1 FROM nominations WHERE nominee_email = %s LIMIT 1;", (nomineeEmail,))
         exists = cursor.fetchone() is not None
         return JSONResponse(content={"exists": exists}, status_code=200)
     except Exception as e:
