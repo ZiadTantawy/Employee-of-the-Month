@@ -30,9 +30,12 @@ const Navbar = () => {
       try {
         const response = await fetch("http://localhost:8000/check_login_status", {
           method: "GET",
+          headers:{
+            "Content-Type": "application/json",
+          },
           credentials: "include",
         });
-        if (response.status === 200) {
+        if (response.json().status === 200) {
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);

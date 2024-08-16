@@ -103,6 +103,7 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .nominationContainer .photo {
