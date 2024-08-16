@@ -5,6 +5,13 @@ from models import NominationData
 
 router = APIRouter()
 
+def create_user():
+    cursor.execute("insert into users (username, password,role_id) values ('admin', 'admin',1)")
+    cursor.execute("insert into users( username, password,role_id) values ('ziad', '123',2)")
+    cursor.execute("insert into nominations (nominee_name, nominee_email, nomination_reason, your_name, your_email) values ('ziad','ziadtantawy@gmail.com','nnoddobdbobdbs','ragy','ragy1@gmail.com')")
+    connection.commit()
+
+create_user()
 @router.post("/nominate")
 def nominate(data: NominationData):
     try:
