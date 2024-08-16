@@ -7,4 +7,6 @@ router = APIRouter()
 
 @router.get("/get_employee_data")
 def get_employee_data():
-    pass
+    cursor.execute("select nominee_name, nominee_email, nomination_reason from nominations")
+    nominee=cursor.fetchone()
+    print(nominee)
