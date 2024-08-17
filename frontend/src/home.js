@@ -47,7 +47,7 @@ const Home = () => {
           </button>
           <button onClick={voteScreen}>
             Vote
-          </button>
+          </button> 
         </div>
       </div>
 
