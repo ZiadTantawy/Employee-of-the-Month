@@ -17,9 +17,10 @@ try:
         host='localhost',
     )
     cursor = connection.cursor()
+    
 except Exception as e:
-    logging.error("Database connection failed: %s", e)
-    raise HTTPException(status_code=500, detail="Database connection failed")
+    logging.error("Database connection or operation failed: %s", e)
+    raise HTTPException(status_code=500, detail="Database connection or operation failed")
 
 # Session middleware
 app.add_middleware(SessionMiddleware, secret_key="your_secret_key")
@@ -44,6 +45,8 @@ class NominationData(BaseModel):
     your_name: str
     your_email: str
 
+
+
 @app.get("/")
 def welcome():
     return {"message": "Welcome to ITWorx API"}
@@ -51,9 +54,14 @@ def welcome():
 @app.get("/winners")
 def get_recent_winners():
     try:
-        cursor.execute("SELECT name, role, date, image FROM winners ORDER BY date DESC LIMIT 3;")
+        cursor.execute("""
+            SELECT u.name, u.role, w.month_year, w.image_url 
+            FROM winners w 
+            JOIN users u ON w.winner_id = u.id 
+            ORDER BY w.month_year DESC LIMIT 3;
+        """)
         winners = cursor.fetchall()
-        result = [{"name": row[0], "role": row[1], "date": row[2], "image": row[3]} for row in winners]
+        result = [{"name": row[0], "role": row[1], "month_year": row[2], "image": row[3]} for row in winners]
         return {"winners": result}
     except Exception as e:
         logging.error("Failed to fetch data from database: %s", e)
@@ -82,26 +90,3 @@ def check_login_status(request: Request):
         return JSONResponse(content={"loggedIn": True}, status_code=200)
     else:
         return JSONResponse(content={"loggedIn": False}, status_code=401)
-
-@app.post("/nominate")
-def nominate(data: NominationData):
-    try:
-        cursor.execute("""
-            INSERT INTO nominations (nominee_name, nominee_email, nomination_reason, your_name, your_email)
-            VALUES (%s, %s, %s, %s, %s);
-        """, (data.nominee_name, data.nominee_email, data.nomination_reason, data.your_name, data.your_email))
-        connection.commit()
-        return JSONResponse(content={"message": "Nomination submitted successfully"}, status_code=200)
-    except Exception as e:
-        logging.error(f"Error during nomination: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
-
-@app.get("/check_email/{email}")
-def check_email(email: str, request: Request):
-    try:
-        cursor.execute("SELECT 1 FROM nominations WHERE nominee_email = %s LIMIT 1;", (email,))
-        exists = cursor.fetchone() is not None
-        return JSONResponse(content={"exists": exists}, status_code=200)
-    except Exception as e:
-        logging.error(f"Error checking email: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")

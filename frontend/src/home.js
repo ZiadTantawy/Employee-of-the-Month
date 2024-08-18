@@ -63,7 +63,7 @@ const Home = () => {
               <img src={winner.image} alt={winner.name} />
               <h3>{winner.name}</h3>
               <p>{winner.role}</p>
-              <p>{winner.date}</p>
+              <p>{new Date(winner.month_year).toLocaleDateString()}</p>
             </div>
           </button>
         ))}
