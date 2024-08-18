@@ -13,10 +13,11 @@ export default function Nominee({ nominee }) {
             credentials: "include",
         });
         const nomineeDataJson = await nomineeData.json()
-        console.log(nomineeDataJson);
         sessionStorage.setItem('employeeData', JSON.stringify(nomineeDataJson));
 
-        // window.location.href = `/profile`;
+        window.location.href = `/profile`;
+        console.log(nomineeDataJson);
+
 
     }catch(error){
         console.error("Error getting nominee data:", error);
