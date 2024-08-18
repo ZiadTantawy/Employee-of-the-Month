@@ -6,25 +6,34 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const username = event.target.email.value;
+  
+    const email = event.target.email.value;
     const password = event.target.password.value;
-
+  
+    // Basic client-side validation
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+  
     try {
       const response = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
         credentials: "include",
       });
-
+  
       if (response.status === 200) {
         window.location.href = "/";
+      } else if (response.status === 422) {
+        const result = await response.json();
+        setError(result.message || "Invalid input. Please check your data.");
       } else {
         const result = await response.json();
-        setError(result.message);
+        setError(result.message || "An unexpected error occurred. Please try again later.");
       }
     } catch (error) {
       console.error("Error:", error);
