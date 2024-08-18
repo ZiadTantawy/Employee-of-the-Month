@@ -115,8 +115,12 @@ def get_employee_data(nomineeName: str) -> dict:
         query = "SELECT users.id FROM users WHERE users.name = %s"
         cursor.execute(query, (nomineeName,))
         nomineeID = cursor.fetchone()
-        query = ""
-        query = ""
+        query = """select users.name, users.email, nominations.nomination_reason
+from users
+inner join nominations on nominations.nominee_id = users.id
+where users.id = %s"""
+        cursor.execute(query, (nomineeID,))
+        nominee = cursor.fetchone()[0]
         if nominee:
             # Return a dictionary for better structure
             return {

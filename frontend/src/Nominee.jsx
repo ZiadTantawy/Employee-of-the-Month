@@ -12,9 +12,8 @@ export default function Nominee({ nominee }) {
             },
             credentials: "include",
         });
-        console.log(nomineeData);
         const nomineeDataJson = await nomineeData.json()
-
+        console.log(nomineeDataJson);
         sessionStorage.setItem('employeeData', JSON.stringify(nomineeDataJson));
 
         // window.location.href = `/profile`;
