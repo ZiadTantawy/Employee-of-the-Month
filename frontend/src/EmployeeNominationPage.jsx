@@ -1,48 +1,80 @@
-import './CSS/EmployeeNominationCSS.css'
+import React, { useState, useEffect } from 'react';
+import './CSS/EmployeeNominationCSS.css';
 import Nominee from './Nominee';
 import Profile from './profile';
-export default function nominate(){
-    function nominate(){
+
+export default function Nominate() {
+    const [nominees, setNominees] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchNominees() {
+            try {
+                const nomineesData = await fetch(`http://localhost:8000/get_nominees`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                });
+                const data = await nomineesData.json();
+                setNominees(data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error getting nominee data:", error);
+                setLoading(false);
+            }
+        }
+
+        fetchNominees();
+        console.log(nominees);
+    }, []);
+
+    function handleNominate() {
         window.location.href = "/nominate";
     }
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
-            <main class="nomination">
+            <main className="nomination">
                 <h1>Nomination</h1>
                 <small>
                     Employees can nominate their colleagues for employee of the month.
                     Nominations are anonymous. You can also nominate employees
                     yourself.
                 </small>
-                <div class="nominationContainer" style={{"margin-top": "20px", "margin-bottom": "10px"}}>
+                <div className="nominationContainer" style={{ marginTop: "20px", marginBottom: "10px" }}>
                     <button
-                    class="photo"
-                    style={{"border-radius": "8px", "background-color": "rgb(231, 231, 231)", width:"40px", height:"40px", fontSize:"16px"}}
-                    onClick={nominate}
+                        className="photo"
+                        style={{ borderRadius: "8px", backgroundColor: "rgb(231, 231, 231)", width: "40px", height: "40px", fontSize: "16px" }}
+                        onClick={handleNominate}
                     >
-                    +
+                        +
                     </button>
-                    <div class="info">
+                    <div className="info">
                         <h4>Nominate employees</h4>
                         <small>You can nominate up to 3 employees this month</small>
                     </div>
                 </div>
-            <Nominee/>
-            <Nominee/>
-            <Nominee/>
-            <div>
-                <br />
-                <button class="redButton">Save</button>
-                <button class="cancelButton">Cancel</button>
-                <br /><br />
-            </div>
-            <h4>Previous Nomination</h4>
-            <Nominee/>
-            <Nominee/>
-            <Nominee/>
+                {nominees.map((nominee, index) => (
+                    <Nominee key={index} nominee={nominee} />
+                ))}
+                <div>
+                    <br />
+                    <button className="redButton">Save</button>
+                    <button className="cancelButton">Cancel</button>
+                    <br /><br />
+                </div>
+                <h4>Previous Nomination</h4>
+                {/* Assuming you'd want to display previous nominations here */}
+                {/* <Nominee />
+                <Nominee />
+                <Nominee /> */}
             </main>
-            
-
         </>
     );
 }

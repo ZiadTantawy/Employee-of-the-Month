@@ -1,7 +1,7 @@
 DATABASE = {
     'dbname': 'itworx',
     'user': 'postgres',
-    'password': '1234',
+    'password': 'mfht132465',
     'host': 'localhost'
 }
 
