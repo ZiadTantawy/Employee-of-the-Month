@@ -237,3 +237,16 @@ def get_current_user(request: Request):
         raise HTTPException(status_code=401, detail="Not authenticated")
 
 
+@app.get("/get_nominee_email/{nominee_name}")
+def get_nominee_email(nominee_name: str):
+    try:
+        query = "SELECT email FROM users WHERE name = %s"
+        cursor.execute(query, (nominee_name,))
+        result = cursor.fetchone()
+        if result:
+            return {"email": result[0]}
+        else:
+            raise HTTPException(status_code=404, detail="Nominee not found")
+    except Exception as e:
+        logging.error("Failed to fetch nominee email from database: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch nominee email from database")

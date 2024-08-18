@@ -7,13 +7,12 @@ const Nominate = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [emailExists, setEmailExists] = useState(null);
-  const [users, setUsers] = useState([]); // Initialize users as an empty array
+  const [users, setUsers] = useState([]);
   const [nomineeEmail, setNomineeEmail] = useState("");
   const [currentUser, setCurrentUser] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch non-nominated users excluding the current user
     const fetchUsers = async () => {
       try {
         const response = await fetch("http://localhost:8000/get_non_nominated_users", {
@@ -21,14 +20,13 @@ const Nominate = () => {
           credentials: "include",
         });
         const data = await response.json();
-        setUsers(data.users || []); // Ensure users is set to an array
+        setUsers(data.users || []);
       } catch (error) {
         console.error("Error fetching users:", error);
-        setUsers([]); // Set users to an empty array on error
+        setUsers([]);
       }
     };
 
-    // Fetch current user
     const fetchCurrentUser = async () => {
       try {
         const response = await fetch("http://localhost:8000/get_current_user", {
@@ -112,7 +110,7 @@ const Nominate = () => {
       if (response.status === 200) {
         setSuccess("Nomination submitted successfully!");
         setError("");
-        navigate('/'); // Redirect to the home page
+        navigate('/');
       } else {
         const result = await response.json();
         setError(result.message);
