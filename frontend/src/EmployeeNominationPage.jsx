@@ -6,11 +6,12 @@ import Profile from './profile';
 export default function Nominate() {
     const [nominees, setNominees] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const storedData = sessionStorage.getItem('email');
+    const userEmail = storedData ? JSON.parse(storedData) : null;
     useEffect(() => {
         async function fetchNominees() {
             try {
-                const nomineesData = await fetch(`http://localhost:8000/get_nominees`, {
+                const nomineesData = await fetch(`http://localhost:8000/get_nominees/${userEmail}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -18,6 +19,7 @@ export default function Nominate() {
                     credentials: "include",
                 });
                 const data = await nomineesData.json();
+                console.log(data);
                 setNominees(data);
                 setLoading(false);
             } catch (error) {

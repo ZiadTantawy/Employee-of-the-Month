@@ -13,7 +13,7 @@ try:
     connection = psycopg2.connect(
         dbname='itworx',
         user='postgres',
-        password='1234',
+        password='mfht132465',
         host='localhost',
     )
     cursor = connection.cursor()
@@ -106,3 +106,70 @@ def check_login_status(request: Request):
     else:
         print("User is not logged in")
         return JSONResponse(content={"loggedIn": False}, status_code=200)
+    
+@app.get("/get_employee_data/{nomineeName}")
+def get_employee_data(nomineeName: str) -> dict:
+    try:
+        # Use parameterized query
+        query = "SELECT nominee_name, nominee_email, nomination_reason FROM nominations WHERE nominee_name = %s"
+        cursor.execute(query, (nomineeName,))
+        nominee = cursor.fetchone()
+        query = ""
+        if nominee:
+            # Return a dictionary for better structure
+            return {
+                "nominee_name": nominee[0],
+                "nominee_email": nominee[1],
+                "nomination_reason": nominee[2]
+            }
+        else:
+            # Return a 404 error if no record is found
+            raise HTTPException(status_code=404, detail="Nominee not found")
+    except Exception as e:
+        logging.error("Failed to fetch data from database: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch data from database")
+    
+@app.get("/get_nominees/ {userEmail}")
+def get_nominees(userEmail: str) -> list:
+    try:
+        query = "SELECT user.id from user where user.email = %s"
+        cursor.execute(query, (userEmail,))
+        userID = cursor.fetchone()
+        query = """SELECT users.name, users.email, nominations.nomination_reason
+FROM users
+JOIN nominations ON nominations.nominee_id = users.id
+WHERE EXTRACT(YEAR FROM nominations.month_year) = EXTRACT(YEAR FROM CURRENT_DATE)
+  AND EXTRACT(MONTH FROM nominations.month_year) = EXTRACT(MONTH FROM CURRENT_DATE)
+  AND nominations.nominator_id = %s
+"""
+        cursor.execute(query, (userID,))
+        nominees = cursor.fetchall()
+        # i turned the fetched data to dictionary since it is returned as a tuple from fetchall
+        # and it can't be parsed in the front end
+        nominees = [{"name": nominee[0], "email": nominee[1], "nomination_reason": nominee[2]} for nominee in nominees]
+        return nominees
+    except Exception as e:
+        logging.error("Failed to fetch data from database: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch data from database")
+
+
+@app.post("/nominate")
+def nominate(data: NominationData):
+    try:
+        cursor.execute("""
+            INSERT INTO nominations (nominee_name, nominee_email, nomination_reason, your_name, your_email)
+            VALUES (%s, %s, %s, %s, %s);
+        """, (data.nominee_name, data.nominee_email, data.nomination_reason, data.your_name, data.your_email))
+        connection.commit()
+        return JSONResponse(content={"message": "Nomination submitted successfully"}, status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+@app.get("/check_email/{nomineeEmail}")
+def check_email(nomineeEmail: str):
+    try:
+        cursor.execute("SELECT 1 FROM nominations WHERE nominee_email = %s LIMIT 1;", (nomineeEmail,))
+        exists = cursor.fetchone() is not None
+        return JSONResponse(content={"exists": exists}, status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Internal Server Error")
