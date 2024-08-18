@@ -22,31 +22,32 @@ const Navbar = () => {
       window.location.href = "/login";
     }
   };
-
+  
   useEffect(() => {
     const checkLoginStatus = async () => {
-      // Implement a way to check login status
-      // Example: Check if a session cookie is present or a token
       try {
         const response = await fetch("http://localhost:8000/check_login_status", {
           method: "GET",
-          headers:{
+          headers: {
             "Content-Type": "application/json",
           },
           credentials: "include",
         });
-        if (response.json().status === 200) {
+        const data = await response.json();
+        if (data.loggedIn) {  // Check the loggedIn property
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);
         }
       } catch (error) {
         console.error("Error checking login status:", error);
+        setIsLoggedIn(false); // Handle errors by assuming the user is logged out
       }
     };
-
-    checkLoginStatus();
+  
+    checkLoginStatus(); // Call the function immediately after the component mounts
   }, []);
+  
 
   return (
     <div className="navbar">
@@ -79,7 +80,7 @@ const Navbar = () => {
           <i className="fa-solid fa-question"></i>
         </button>
         <button id="auth-button" className="btn" onClick={handleLoginLogout}>
-          <i className={`fas ${isLoggedIn ? 'fa-sign-out-alt' : 'fa-user'}`}></i>
+          <i className={`fa ${isLoggedIn ? 'fa-sign-out-alt' : 'fa-user'}`}></i>
         </button>
       </div>
     </div>

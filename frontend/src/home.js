@@ -20,7 +20,7 @@ const Home = () => {
       })
       .catch(error => {
         console.error('Error fetching winners:', error);
-        setError('Failed to load recent winners. Please try again later.');
+        setError(`Failed to load recent winners. ${error.message}`);
       });
   }, []);
 
@@ -47,7 +47,7 @@ const Home = () => {
           </button>
           <button onClick={voteScreen}>
             Vote
-          </button>
+          </button> 
         </div>
       </div>
 
@@ -62,8 +62,8 @@ const Home = () => {
             <div className="winner">
               <img src={winner.image} alt={winner.name} />
               <h3>{winner.name}</h3>
-              <p>{winner.role}</p>
-              <p>{winner.date}</p>
+              <p>{winner.email}</p>
+              <p>{new Date(winner.month_year).toLocaleDateString()}</p>
             </div>
           </button>
         ))}
