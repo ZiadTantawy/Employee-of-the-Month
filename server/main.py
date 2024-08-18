@@ -17,7 +17,6 @@ try:
         host='localhost',
     )
     cursor = connection.cursor()
-    
 except Exception as e:
     logging.error("Database connection or operation failed: %s", e)
     raise HTTPException(status_code=500, detail="Database connection or operation failed")
@@ -45,8 +44,6 @@ class NominationData(BaseModel):
     your_name: str
     your_email: str
 
-
-
 @app.get("/")
 def welcome():
     return {"message": "Welcome to ITWorx API"}
@@ -55,17 +52,24 @@ def welcome():
 def get_recent_winners():
     try:
         cursor.execute("""
-            SELECT u.name, u.role, w.month_year, w.image_url 
+            SELECT u.name, u.email, w.month_year, COALESCE(w.image_url, '') 
             FROM winners w 
             JOIN users u ON w.winner_id = u.id 
             ORDER BY w.month_year DESC LIMIT 3;
         """)
         winners = cursor.fetchall()
-        result = [{"name": row[0], "role": row[1], "month_year": row[2], "image": row[3]} for row in winners]
+        if not winners:
+            logging.warning("No winners found in the database.")
+            raise HTTPException(status_code=404, detail="No winners found")
+        
+        result = [{"name": row[0], "email": row[1], "month_year": row[2], "image": row[3]} for row in winners]
         return {"winners": result}
+    except psycopg2.DatabaseError as db_error:
+        logging.error("Database error occurred: %s", db_error)
+        raise HTTPException(status_code=500, detail=f"Database error occurred: {db_error}")
     except Exception as e:
-        logging.error("Failed to fetch data from database: %s", e)
-        raise HTTPException(status_code=500, detail="Failed to fetch data from database")
+        logging.error("An unexpected error occurred: %s", e)
+        raise HTTPException(status_code=500, detail=f"Failed to fetch data from the database: {e}")
 
 @app.post("/login")
 def login(data: LoginData, request: Request):
