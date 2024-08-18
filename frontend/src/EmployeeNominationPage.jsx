@@ -10,14 +10,9 @@ export default function Nominate() {
 
     useEffect(() => {
         async function fetchNominees() {
-            if (!userEmail) {
-                console.error("User email is not available.");
-                setLoading(false);
-                return;
-            }
 
             try {
-                const response = await fetch(`http://localhost:8000/get_nominees/${userEmail}`, {
+                const response = await fetch(`http://localhost:8000/get_nominees`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -75,7 +70,7 @@ export default function Nominate() {
                         <small>You can nominate up to 3 employees this month</small>
                     </div>
                 </div>
-                {Array.isArray(nominees) && nominees.length > 0 ? (
+                { nominees.length > 0 ? (
                     nominees.map((nominee, index) => (
                         <Nominee key={index} nominee={nominee} />
                     ))

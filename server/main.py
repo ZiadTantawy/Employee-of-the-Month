@@ -111,9 +111,11 @@ def check_login_status(request: Request):
 def get_employee_data(nomineeName: str) -> dict:
     try:
         # Use parameterized query
-        query = "SELECT nominee_name, nominee_email, nomination_reason FROM nominations WHERE nominee_name = %s"
+
+        query = "SELECT users.id FROM users WHERE users.name = %s"
         cursor.execute(query, (nomineeName,))
-        nominee = cursor.fetchone()
+        nomineeID = cursor.fetchone()
+        query = ""
         query = ""
         if nominee:
             # Return a dictionary for better structure
@@ -129,12 +131,19 @@ def get_employee_data(nomineeName: str) -> dict:
         logging.error("Failed to fetch data from database: %s", e)
         raise HTTPException(status_code=500, detail="Failed to fetch data from database")
     
-@app.get("/get_nominees/ {userEmail}")
-def get_nominees(userEmail: str) -> list:
+@app.get("/get_nominees")
+def get_nominees(request: Request) -> list:
     try:
-        query = "SELECT user.id from user where user.email = %s"
-        cursor.execute(query, (userEmail,))
+        user_email = request.session.get('user')
+        if user_email:
+            # Use user_email as needed
+            print("User email from session:", user_email)
+        else:
+            print("No user email in session")
+        query = "SELECT users.id from users where users.email = %s"
+        cursor.execute(query, (user_email,))
         userID = cursor.fetchone()
+        print(userID)
         query = """SELECT users.name, users.email, nominations.nomination_reason
 FROM users
 JOIN nominations ON nominations.nominee_id = users.id
