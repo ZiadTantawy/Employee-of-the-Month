@@ -1,24 +1,17 @@
 import React from 'react';
 import "./CSS/EmployeeOfTheMonthCSS.css";
 
-export default function EmployeeCard(){
-    async function Profile(event){
+export default function EmployeeCard({ nominee }){
+    async function Profile(){
         try{
-            const container = event.target.closest('.container4');
-
-            // Find the h4 element within this container
-            const nameElement = container.querySelector('h4');
-            
-            // Extract the text content from the h4 element
-            const nomineeName = nameElement.textContent;
-            const nomineeData = await fetch(`http://localhost:8000/get_employee_data/${encodeURIComponent(nomineeName)}`, {
+            const nomineeData = await fetch(`http://localhost:8000/get_employee_data/${encodeURIComponent(nominee.name)}`, {
                 method:"GET",
                 headers:{
                   "Content-Type": "application/json",
                 },
                 credentials: "include",
             });
-            console.log(nomineeName);
+            console.log(nominee.name);
             const nomineeDataJson = await nomineeData.json()
 
             sessionStorage.setItem('employeeData', JSON.stringify(nomineeDataJson));
@@ -28,7 +21,7 @@ export default function EmployeeCard(){
         }catch(error){
             console.error("Error getting nominee data:", error);
         }
-        // window.location.href = "/profile";
+        window.location.href = "/profile";
     };
     return (
         <div className="container4" >
@@ -37,7 +30,7 @@ export default function EmployeeCard(){
                     <img className=" profilePhoto" alt="Profile Picture" src="PIC/profilePicture.jpg"/>
                 </div>
                 <div className="info">
-                    <h4>Mohamed Tarek 1</h4>
+                    <h4>{nominee.name}</h4>
                     <small>Data Scientist - 5 years experience</small>
                 </div>
             </div>

@@ -56,7 +56,7 @@ const Navbar = () => {
       </Helmet>
       <div className="logo">
         <a href="/">
-          <img src="./PIC/ITWorx_logo.png" alt="Logo" width="100" height="25" />
+          <img src={require("./PIC/ITWorx_logo.png")} alt="Logo" width="100" height="25" />
         </a>
       </div>
 

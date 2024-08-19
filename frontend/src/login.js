@@ -25,14 +25,18 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
         credentials: "include",
       });
-  
+
+      const result = await response.json();
+
       if (response.status === 200) {
-        window.location.href = "/";
+        if (result.isAdmin) {
+          window.location.href = "/adminControl";
+        } else {
+          window.location.href = "/";
+        }
       } else if (response.status === 422) {
-        const result = await response.json();
         setError(result.message || "Invalid input. Please check your data.");
       } else {
-        const result = await response.json();
         setError(result.message || "An unexpected error occurred. Please try again later.");
       }
     } catch (error) {

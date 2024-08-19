@@ -32,9 +32,28 @@ const Home = () => {
     window.location.href = "/vote";
   }
 
-  function profilePage() {
+  async function Profile(nominee){
+    try{
+        console.log(nominee.name)
+        const nomineeData = await fetch(`http://localhost:8000/get_employee_data/${encodeURIComponent(nominee.name)}`, {
+            method:"GET",
+            headers:{
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+        });
+        console.log(nominee.name);
+        const nomineeDataJson = await nomineeData.json()
+
+        sessionStorage.setItem('employeeData', JSON.stringify(nomineeDataJson));
+
+        window.location.href = `/profile`;
+
+    }catch(error){
+        console.error("Error getting nominee data:", error);
+    }
     window.location.href = "/profile";
-  }
+};
 
   return (
     <div className="wrapper">
@@ -58,7 +77,7 @@ const Home = () => {
       <div className="winners">
         {error && <p className="error">{error}</p>}
         {winners.map((winner, index) => (
-          <button key={index} className={`btn${index + 2}`} onClick={profilePage}>
+          <button key={index} className={`btn${index + 2}`} onClick={() => Profile(winner)}>
             <div className="winner">
               <img src={winner.image} alt={winner.name} />
               <h3>{winner.name}</h3>
