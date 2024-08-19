@@ -12,7 +12,7 @@ body {
 }
 
 .header {
-    background-image: url('../../public/PIC/1.jpg');
+    background-image: url('..//PIC/1.jpg');
     border-radius: 25px;
     background-size: cover;
     background-position: center;
