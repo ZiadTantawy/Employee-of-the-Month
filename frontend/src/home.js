@@ -79,7 +79,7 @@ const Home = () => {
         {winners.map((winner, index) => (
           <button key={index} className={`btn${index + 2}`} onClick={() => Profile(winner)}>
             <div className="winner">
-              <img src={winner.image} alt={winner.name} />
+              <img src={`data:image/jpeg;base64,${winner.image}`} alt={winner.name} />
               <h3>{winner.name}</h3>
               <p>{winner.email}</p>
               <p>{new Date(winner.month_year).toLocaleDateString()}</p>

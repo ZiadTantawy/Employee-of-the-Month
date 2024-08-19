@@ -5,6 +5,8 @@ from starlette.middleware.sessions import SessionMiddleware
 import psycopg2
 import logging
 from pydantic import BaseModel
+import base64
+
 
 app = FastAPI()
 
@@ -33,6 +35,43 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# try:
+#     drawing = open("C:\\Users\\hp\\Documents\\Programming Projects\\Web Projects\\ItworxProject\\ITWorx\\frontend\\src\\PIC\\2.jpg", 'rb').read() 
+
+#     query = """
+# UPDATE users
+# SET image = %s
+# WHERE email = 'bob@e.com';
+#     """
+#     cursor.execute(query, (drawing,))
+#     connection.commit()
+# except Exception as e:
+#     print("error",e)
+# try:
+#     drawing = open("C:\\Users\\hp\\Documents\\Programming Projects\\Web Projects\\ItworxProject\\ITWorx\\frontend\\src\\PIC\\3.jpg", 'rb').read() 
+
+#     query = """
+# UPDATE users
+# SET image = %s
+# WHERE email = 'jane@e.com';
+#     """
+#     cursor.execute(query, (drawing,))
+#     connection.commit()
+# except Exception as e:
+#     print("error",e)
+# try:
+#     drawing = open("C:\\Users\\hp\\Documents\\Programming Projects\\Web Projects\\ItworxProject\\ITWorx\\frontend\\src\\PIC\\4.jpg", 'rb').read() 
+
+#     query = """
+# UPDATE users
+# SET image = %s
+# WHERE email = 'alice@e.com';
+#     """
+#     cursor.execute(query, (drawing,))
+#     connection.commit()
+# except Exception as e:
+#     print("error",e)
+
 class LoginData(BaseModel):
     email: str
     password: str
@@ -52,7 +91,7 @@ def welcome():
 def get_recent_winners():
     try:
         cursor.execute("""
-            SELECT u.name, u.email, w.month_year, COALESCE(w.image_url, '') 
+            SELECT u.name, u.email, w.month_year, u.image 
             FROM winners w 
             JOIN users u ON w.winner_id = u.id 
             ORDER BY w.month_year DESC LIMIT 3;
@@ -62,7 +101,7 @@ def get_recent_winners():
             logging.warning("No winners found in the database.")
             raise HTTPException(status_code=404, detail="No winners found")
         
-        result = [{"name": row[0], "email": row[1], "month_year": row[2], "image": row[3]} for row in winners]
+        result = [{"name": row[0], "email": row[1], "month_year": row[2], "image": base64.b64encode(row[3]).decode('utf-8') if row[3] else None} for row in winners]
         return {"winners": result}
     except psycopg2.DatabaseError as db_error:
         connection.rollback()  # Roll back the transaction on error
@@ -187,7 +226,7 @@ def get_employee_data(nomineeName: str) -> dict:
         query = "SELECT users.id FROM users WHERE users.name = %s"
         cursor.execute(query, (nomineeName,))
         nomineeID = cursor.fetchone()[0]
-        query = """select users.name, users.email, nominations.nomination_reason
+        query = """select users.name, users.email, nominations.nomination_reason, users.image
 from users
 inner join nominations on nominations.nominee_id = users.id
 where users.id = %s"""
@@ -198,7 +237,8 @@ where users.id = %s"""
             return {
                 "nominee_name": nominee[0],
                 "nominee_email": nominee[1],
-                "nomination_reason": nominee[2]
+                "nomination_reason": nominee[2],
+                "image": base64.b64encode(nominee[3]).decode('utf-8') if nominee[3] else None
             }
         else:
             # Return a 404 error if no record is found
@@ -224,7 +264,7 @@ def get_nominees(request: Request) -> list:
         if userID is None:
             raise HTTPException(status_code=404, detail="User not found")
         print(userID)
-        query = """SELECT users.name, users.email, nominations.nomination_reason
+        query = """SELECT users.name, users.email, nominations.nomination_reason, users.image
 FROM users
 JOIN nominations ON nominations.nominee_id = users.id
 WHERE EXTRACT(YEAR FROM nominations.month_year) = EXTRACT(YEAR FROM CURRENT_DATE)
@@ -235,7 +275,15 @@ WHERE EXTRACT(YEAR FROM nominations.month_year) = EXTRACT(YEAR FROM CURRENT_DATE
         nominees = cursor.fetchall()
         # i turned the fetched data to dictionary since it is returned as a tuple from fetchall
         # and it can't be parsed in the front end
-        nominees = [{"name": nominee[0], "email": nominee[1], "nomination_reason": nominee[2]} for nominee in nominees]
+        nominees = [
+            {
+                "name": nominee[0],
+                "email": nominee[1],
+                "nomination_reason": nominee[2],
+                "image": base64.b64encode(nominee[3]).decode('utf-8') if nominee[3] else None
+            }
+            for nominee in nominees
+        ]
         return nominees
     except Exception as e:
         connection.rollback()  # Roll back the transaction on error
@@ -256,7 +304,7 @@ def get_nominees(request: Request) -> list:
         cursor.execute(query, (user_email,))
         userID = cursor.fetchone()
         print(userID)
-        query = """SELECT users.name, users.email, nominations.nomination_reason
+        query = """SELECT users.name, users.email, nominations.nomination_reason, users.image
 FROM users
 JOIN nominations ON nominations.nominee_id = users.id
 WHERE (EXTRACT(YEAR FROM nominations.month_year) <> EXTRACT(YEAR FROM CURRENT_DATE)
@@ -268,7 +316,15 @@ Limit 3
         nominees = cursor.fetchall()
         # i turned the fetched data to dictionary since it is returned as a tuple from fetchall
         # and it can't be parsed in the front end
-        nominees = [{"name": nominee[0], "email": nominee[1], "nomination_reason": nominee[2]} for nominee in nominees]
+        nominees = [
+            {
+                "name": nominee[0],
+                "email": nominee[1],
+                "nomination_reason": nominee[2],
+                "image": base64.b64encode(nominee[3]).decode('utf-8') if nominee[3] else None
+            }
+            for nominee in nominees
+        ]       
         return nominees
     except Exception as e:
         connection.rollback()  # Roll back the transaction on error
@@ -280,7 +336,7 @@ Limit 3
 def get_all_current_nominees():
     try:
         query = """
-    SELECT users.name, users.email, nominations.nomination_reason
+    SELECT users.name, users.email, nominations.nomination_reason, users.image
     FROM users
     JOIN nominations ON nominations.nominee_id = users.id
     WHERE (EXTRACT(YEAR FROM nominations.month_year) = EXTRACT(YEAR FROM CURRENT_DATE)
@@ -288,7 +344,15 @@ def get_all_current_nominees():
             """
         cursor.execute(query)
         current_nominees = cursor.fetchall()
-        current_nominees = [{"name": nominee[0], "email": nominee[1], "nomination_reason": nominee[2]} for nominee in current_nominees]
+        current_nominees = [
+            {
+                "name": nominee[0],
+                "email": nominee[1],
+                "nomination_reason": nominee[2],
+                "image": base64.b64encode(nominee[3]).decode('utf-8') if nominee[3] else None
+            }
+            for nominee in current_nominees
+        ] 
         return current_nominees
     except Exception as e:
         connection.rollback()

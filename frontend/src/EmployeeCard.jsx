@@ -49,7 +49,7 @@ export default function EmployeeCard({ nominee }){
         <div className="container4" >
             <div className="container4" style={{cursor:"pointer"}} onClick={Profile}>
                 <div>
-                    <img className=" profilePhoto" alt="Profile Picture" src="PIC/profilePicture.jpg"/>
+                    <img className=" profilePhoto" alt="Profile Picture" src={`data:image/jpeg;base64,${nominee.image}`}/>
                 </div>
                 <div className="info">
                     <h4>{nominee.name}</h4>
