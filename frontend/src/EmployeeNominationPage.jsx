@@ -4,47 +4,54 @@ import Nominee from './Nominee';
 
 export default function Nominate() {
     const [nominees, setNominees] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const storedData = sessionStorage.getItem('email');
-    const userEmail = storedData ? JSON.parse(storedData) : null;
+    const [previousNominees, setPreviousNominees] = useState([]);
+    const [loadingNominees, setLoadingNominees] = useState(true);
+    const [loadingPreviousNominees, setLoadingPreviousNominees] = useState(true);
 
     useEffect(() => {
         async function fetchNominees() {
-
             try {
-                const response = await fetch(`http://localhost:8000/get_nominees`, {
+                // to fetch current nominees
+                const response = await fetch("http://localhost:8000/get_nominees", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     credentials: "include",
                 });
-                const data = await response.json();
-                console.log("Fetched data:", data);
+                const currentNominees = await response.json();
+                console.log("Current Nominees:", currentNominees);
+                setNominees(currentNominees.length > 0 ? currentNominees : []);
 
-                // Ensure data is an array
-                if (Array.isArray(data)) {
-                    setNominees(data);
-                } else {
-                    console.error("Fetched data is not an array:", data);
-                    setNominees([]);
-                }
-                setLoading(false);
+                //to fetch the previous nominees
+                const response1 = await fetch("http://localhost:8000/get_previous_nominees", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                });
+                const previousNominees = await response1.json();
+                console.log("Previous Nominees:", previousNominees);
+                setPreviousNominees(previousNominees.length > 0 ? previousNominees : []);
             } catch (error) {
                 console.error("Error getting nominee data:", error);
-                setNominees([]); // Default to empty array on error
-                setLoading(false);
+                setNominees([]);
+                setPreviousNominees([]);
+            } finally {
+                setLoadingNominees(false);
+                setLoadingPreviousNominees(false);
             }
         }
 
         fetchNominees();
-    }, [userEmail]); // Added userEmail to the dependency array
+    }, []);
 
     function handleNominate() {
         window.location.href = "/nominate";
     }
 
-    if (loading) {
+    if (loadingNominees || loadingPreviousNominees) {
         return <div>Loading...</div>;
     }
 
@@ -70,7 +77,7 @@ export default function Nominate() {
                         <small>You can nominate up to 3 employees this month</small>
                     </div>
                 </div>
-                { nominees.length > 0 ? (
+                {nominees.length > 0 ? (
                     nominees.map((nominee, index) => (
                         <Nominee key={index} nominee={nominee} />
                     ))
@@ -84,10 +91,13 @@ export default function Nominate() {
                     <br /><br />
                 </div>
                 <h4>Previous Nomination</h4>
-                {/* Uncomment and add real data here if needed */}
-                {/* <Nominee />
-                <Nominee />
-                <Nominee /> */}
+                {previousNominees.length > 0 ? (
+                    previousNominees.map((nominee, index) => (
+                        <Nominee key={index} nominee={nominee} />
+                    ))
+                ) : (
+                    <p>No nominees available.</p>
+                )}
             </main>
         </>
     );

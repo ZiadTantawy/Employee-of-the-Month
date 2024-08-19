@@ -2,8 +2,7 @@ import './CSS/EmployeeNominationCSS.css';
 import Profile from './profile';
 
 export default function Nominee({ nominee }) {
-  console.log(nominee);
-  async function Profile(event){
+  async function Profile(){
     try{
         const nomineeData = await fetch(`http://localhost:8000/get_employee_data/${encodeURIComponent(nominee.name)}`, {
             method:"GET",
@@ -13,18 +12,14 @@ export default function Nominee({ nominee }) {
             credentials: "include",
         });
         const nomineeDataJson = await nomineeData.json()
-        console.log(nomineeDataJson);
         sessionStorage.setItem('employeeData', JSON.stringify(nomineeDataJson));
 
-        // window.location.href = `/profile`;
+        window.location.href = `/profile`;
 
     }catch(error){
         console.error("Error getting nominee data:", error);
     }
 };
-  function handleProfile() {
-    window.location.href = "/profile";
-  };
 
   return (
     <div className="nominationContainer" onClick={Profile}>

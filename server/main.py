@@ -68,9 +68,13 @@ def get_recent_winners():
         result = [{"name": row[0], "email": row[1], "month_year": row[2], "image": row[3]} for row in winners]
         return {"winners": result}
     except psycopg2.DatabaseError as db_error:
+        connection.rollback()  # Roll back the transaction on error
+
         logging.error("Database error occurred: %s", db_error)
         raise HTTPException(status_code=500, detail=f"Database error occurred: {db_error}")
     except Exception as e:
+        connection.rollback()  # Roll back the transaction on error
+
         logging.error("An unexpected error occurred: %s", e)
         raise HTTPException(status_code=500, detail=f"Failed to fetch data from the database: {e}")
 
@@ -89,6 +93,8 @@ def login(data: LoginData, request: Request):
         else:
             return JSONResponse(content={"message": "Invalid credentials"}, status_code=401)
     except Exception as e:
+        connection.rollback()  # Roll back the transaction on error
+
         logging.error("An unexpected error occurred: %s", e)
         raise HTTPException(status_code=500, detail=f"Failed to fetch data from the database: {e}")
 
@@ -114,13 +120,13 @@ def get_employee_data(nomineeName: str) -> dict:
 
         query = "SELECT users.id FROM users WHERE users.name = %s"
         cursor.execute(query, (nomineeName,))
-        nomineeID = cursor.fetchone()
+        nomineeID = cursor.fetchone()[0]
         query = """select users.name, users.email, nominations.nomination_reason
 from users
 inner join nominations on nominations.nominee_id = users.id
 where users.id = %s"""
         cursor.execute(query, (nomineeID,))
-        nominee = cursor.fetchone()[0]
+        nominee = cursor.fetchone()
         if nominee:
             # Return a dictionary for better structure
             return {
@@ -132,6 +138,7 @@ where users.id = %s"""
             # Return a 404 error if no record is found
             raise HTTPException(status_code=404, detail="Nominee not found")
     except Exception as e:
+        connection.rollback()  # Roll back the transaction on error
         logging.error("Failed to fetch data from database: %s", e)
         raise HTTPException(status_code=500, detail="Failed to fetch data from database")
     
@@ -139,6 +146,7 @@ where users.id = %s"""
 def get_nominees(request: Request) -> list:
     try:
         user_email = request.session.get('user')
+
         if user_email:
             # Use user_email as needed
             print("User email from session:", user_email)
@@ -147,6 +155,8 @@ def get_nominees(request: Request) -> list:
         query = "SELECT users.id from users where users.email = %s"
         cursor.execute(query, (user_email,))
         userID = cursor.fetchone()
+        if userID is None:
+            raise HTTPException(status_code=404, detail="User not found")
         print(userID)
         query = """SELECT users.name, users.email, nominations.nomination_reason
 FROM users
@@ -162,8 +172,63 @@ WHERE EXTRACT(YEAR FROM nominations.month_year) = EXTRACT(YEAR FROM CURRENT_DATE
         nominees = [{"name": nominee[0], "email": nominee[1], "nomination_reason": nominee[2]} for nominee in nominees]
         return nominees
     except Exception as e:
+        connection.rollback()  # Roll back the transaction on error
         logging.error("Failed to fetch data from database: %s", e)
         raise HTTPException(status_code=500, detail="Failed to fetch data from database")
+
+@app.get("/get_previous_nominees")
+def get_nominees(request: Request) -> list:
+    try:
+        user_email = request.session.get('user')
+        
+        if user_email:
+            # Use user_email as needed
+            print("User email from session:", user_email)
+        else:
+            print("No user email in session")
+        query = "SELECT users.id from users where users.email = %s"
+        cursor.execute(query, (user_email,))
+        userID = cursor.fetchone()
+        print(userID)
+        query = """SELECT users.name, users.email, nominations.nomination_reason
+FROM users
+JOIN nominations ON nominations.nominee_id = users.id
+WHERE (EXTRACT(YEAR FROM nominations.month_year) <> EXTRACT(YEAR FROM CURRENT_DATE)
+  OR EXTRACT(MONTH FROM nominations.month_year) <> EXTRACT(MONTH FROM CURRENT_DATE))
+  AND nominations.nominator_id = %s
+Limit 3
+"""
+        cursor.execute(query, (userID,))
+        nominees = cursor.fetchall()
+        # i turned the fetched data to dictionary since it is returned as a tuple from fetchall
+        # and it can't be parsed in the front end
+        nominees = [{"name": nominee[0], "email": nominee[1], "nomination_reason": nominee[2]} for nominee in nominees]
+        return nominees
+    except Exception as e:
+        connection.rollback()  # Roll back the transaction on error
+
+        logging.error("Failed to fetch data from database: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch data from database")
+    
+@app.get("/get_all_current_nominees")
+def get_all_current_nominees():
+    try:
+        query = """
+    SELECT users.name, users.email, nominations.nomination_reason
+    FROM users
+    JOIN nominations ON nominations.nominee_id = users.id
+    WHERE (EXTRACT(YEAR FROM nominations.month_year) = EXTRACT(YEAR FROM CURRENT_DATE)
+    AND EXTRACT(MONTH FROM nominations.month_year) = EXTRACT(MONTH FROM CURRENT_DATE))
+            """
+        cursor.execute(query)
+        current_nominees = cursor.fetchall()
+        current_nominees = [{"name": nominee[0], "email": nominee[1], "nomination_reason": nominee[2]} for nominee in current_nominees]
+        return current_nominees
+    except Exception as e:
+        connection.rollback()
+        logging.error("Failed to fetch data from database: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch data from database")
+        
 
 
 @app.post("/nominate")
@@ -176,6 +241,8 @@ def nominate(data: NominationData):
         connection.commit()
         return JSONResponse(content={"message": "Nomination submitted successfully"}, status_code=200)
     except Exception as e:
+        connection.rollback()  # Roll back the transaction on error
+
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 @app.get("/check_email/{nomineeEmail}")
@@ -185,4 +252,6 @@ def check_email(nomineeEmail: str):
         exists = cursor.fetchone() is not None
         return JSONResponse(content={"exists": exists}, status_code=200)
     except Exception as e:
+        connection.rollback()  # Roll back the transaction on error
+
         raise HTTPException(status_code=500, detail="Internal Server Error")
