@@ -15,7 +15,7 @@ try:
     connection = psycopg2.connect(
         dbname='itworx',
         user='postgres',
-        password='1234',
+        password='123',
         host='localhost',
     )
     cursor = connection.cursor()
@@ -251,7 +251,7 @@ where users.id = %s"""
 @app.get("/get_nominees")
 def get_nominees(request: Request) -> list:
     try:
-        user_email = request.session.get('user')
+        user_email = request.session.get('user')["email"]
 
         if user_email:
             # Use user_email as needed
@@ -291,9 +291,9 @@ WHERE EXTRACT(YEAR FROM nominations.month_year) = EXTRACT(YEAR FROM CURRENT_DATE
         raise HTTPException(status_code=500, detail="Failed to fetch data from database")
 
 @app.get("/get_previous_nominees")
-def get_nominees(request: Request) -> list:
+def get_previous_nominees(request: Request) -> list:
     try:
-        user_email = request.session.get('user')
+        user_email = request.session.get('user')["email"]
         
         if user_email:
             # Use user_email as needed
