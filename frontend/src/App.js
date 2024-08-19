@@ -8,6 +8,7 @@ import EmployeeNomination from './EmployeeNominationPage';
 import Nominate from './nominate';
 import Profile from './profile';
 import AdminPage from './adminPage';
+import AddUser from './addUser';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/nominate" element={<Nominate/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/adminControl" element={<AdminPage/>}/>
+        <Route path="addUser" element={<AddUser/>}/>
       </Routes>
     </Router>
   );

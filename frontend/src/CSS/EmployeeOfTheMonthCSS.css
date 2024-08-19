@@ -14,6 +14,7 @@ small {
     margin-bottom: 0;
     display: flex; /* Ensures content aligns horizontally */
     align-items: center; /* Centers items vertically */
+    justify-content: space-between;
 }
 
 .profilePhoto {
@@ -41,8 +42,24 @@ small {
     margin-left: 0px; /* Adds space between the image and text */
     width:160px
 }
-a:hover{
+
+.vote{
     color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    align-items: flex-end;
+}
+
+.vote:hover {
+    color: whitesmoke;
     cursor: pointer;
+    background-color: #007bff;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
 }
 
