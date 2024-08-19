@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./CSS/nominate.css";
 import "./CSS/nominate2.css";
 
@@ -6,38 +7,92 @@ const Nominate = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [emailExists, setEmailExists] = useState(null);
+  const [users, setUsers] = useState([]); // Initialize users as an empty array
+  const [nomineeEmail, setNomineeEmail] = useState("");
+  const [currentUser, setCurrentUser] = useState({});
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    // Fetch non-nominated users excluding the current user
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/get_non_nominated_users", {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await response.json();
+        setUsers(data.users || []); // Ensure users is set to an array
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        setUsers([]); // Set users to an empty array on error
+      }
+    };
+
+    // Fetch current user
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/get_current_user", {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await response.json();
+        setCurrentUser(data);
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
+    };
+
+    fetchUsers();
+    fetchCurrentUser();
+  }, []);
+
+  const handleNomineeChange = async (event) => {
+    const nomineeName = event.target.value;
+    if (nomineeName) {
+      try {
+        const response = await fetch(`http://localhost:8000/get_nominee_email/${encodeURIComponent(nomineeName)}`, {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await response.json();
+        setNomineeEmail(data.email);
+      } catch (error) {
+        console.error("Error fetching nominee email:", error);
+      }
+    } else {
+      setNomineeEmail("");
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const nomineeName = event.target['nominee-name'].value;
-    const nomineeEmail = event.target['nominee-email'].value;
     const nominationReason = event.target['nomination-reason'].value;
-    const yourName = event.target['your-name'].value;
-    const yourEmail = event.target['your-email'].value;
-    try {
-        const emailResponse = await fetch(`http://localhost:8000/check_email/${encodeURIComponent(nomineeEmail)}`, {
-          method:"GET",
-          headers:{
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        });
 
-        const emailData = await emailResponse.json();
-        
-        if (emailData.exists) {
-          setEmailExists(true);
-          setSuccess("");
-          return;
-        } else {
-          setEmailExists(false);
-        }
-      } catch (error) {
-        console.error("Error checking email:", error);
+    try {
+      const emailResponse = await fetch(`http://localhost:8000/check_email/${encodeURIComponent(nomineeEmail)}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const emailData = await emailResponse.json();
+
+      if (emailData.exists) {
+        setEmailExists(true);
+        setSuccess("");
         return;
+      } else {
+        setEmailExists(false);
       }
+    } catch (error) {
+      console.error("Error checking email:", error);
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:8000/nominate", {
         method: "POST",
@@ -48,16 +103,16 @@ const Nominate = () => {
           nominee_name: nomineeName,
           nominee_email: nomineeEmail,
           nomination_reason: nominationReason,
-          your_name: yourName,
-          your_email: yourEmail
+          your_name: currentUser.name,
+          your_email: currentUser.email,
         }),
         credentials: "include",
       });
 
       if (response.status === 200) {
-        
         setSuccess("Nomination submitted successfully!");
         setError("");
+        navigate('/'); // Redirect to the home page
       } else {
         const result = await response.json();
         setError(result.message);
@@ -77,11 +132,18 @@ const Nominate = () => {
         <form id="nominate-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="nominee-name">Nominee's name*</label>
-            <input type="text" id="nominee-name" name="nominee-name" required />
+            <select id="nominee-name" name="nominee-name" onChange={handleNomineeChange} required>
+              <option value="">Select a nominee</option>
+              {users.map(user => (
+                <option key={user.email} value={user.name}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="nominee-email">Nominee's email*</label>
-            <input type="email" id="nominee-email" name="nominee-email" required />
+            <input type="email" id="nominee-email" name="nominee-email" value={nomineeEmail} readOnly />
           </div>
           <div className="form-group">
             <label htmlFor="nomination-reason">Reason for nomination*</label>
@@ -89,11 +151,11 @@ const Nominate = () => {
           </div>
           <div className="form-group">
             <label htmlFor="your-name">Your name*</label>
-            <input type="text" id="your-name" name="your-name" required />
+            <input type="text" id="your-name" name="your-name" value={currentUser.name} readOnly />
           </div>
           <div className="form-group">
             <label htmlFor="your-email">Your email*</label>
-            <input type="email" id="your-email" name="your-email" required />
+            <input type="email" id="your-email" name="your-email" value={currentUser.email} readOnly />
           </div>
           <div className="cont">
             <button type="submit" className="btny">
