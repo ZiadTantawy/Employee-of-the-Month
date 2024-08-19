@@ -13,7 +13,7 @@ try:
     connection = psycopg2.connect(
         dbname='itworx',
         user='postgres',
-        password='123',
+        password='1234',
         host='localhost',
     )
     cursor = connection.cursor()
@@ -41,6 +41,8 @@ class NominationData(BaseModel):
     name: str
     email: str
     reason: str
+    
+
 
 @app.get("/")
 def welcome():
@@ -369,4 +371,82 @@ def get_current_user(request: Request):
     else:
         raise HTTPException(status_code=401, detail="Not authenticated")
 
+
+@app.post("/addUser")
+def add_user(data: dict, request: Request):
+    try:
+        # Extract user data
+        name = data.get("name")
+        email = data.get("email")
+        password = data.get("password")
+
+        # Validate input
+        if not name or not email or not password:
+            raise HTTPException(status_code=400, detail="Missing required fields")
+
+        # Insert the new user into the database
+        insert_query = """
+            INSERT INTO users (name, email, password, image_url, created_at)
+            VALUES (%s, %s, %s, NULL, CURRENT_TIMESTAMP);
+        """
+        cursor.execute(insert_query, (name, email, password))
+        connection.commit()
+        
+        return JSONResponse(content={"message": "User added successfully!"}, status_code=200)
+    except psycopg2.IntegrityError as e:
+        connection.rollback()
+        logging.error("Integrity error: %s", e)
+        raise HTTPException(status_code=400, detail="User already exists or invalid data")
+    except Exception as e:
+        connection.rollback()
+        logging.error("Error adding user: %s", e)
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+    
+@app.post("/vote/{nomineeName}")
+def vote_for_nominee(nomineeName: str, request: Request):
+    try:
+        # Check if user is authenticated
+        if 'user' not in request.session:
+            raise HTTPException(status_code=401, detail="Not authenticated")
+
+        user_email = request.session['user']['email']
+
+        # Fetch the nominee's ID
+        cursor.execute("SELECT id FROM users WHERE name = %s", (nomineeName,))
+        nominee_id = cursor.fetchone()
+
+        if nominee_id is None:
+            raise HTTPException(status_code=404, detail="Nominee not found")
+
+        # Fetch the voter’s ID
+        cursor.execute("SELECT id FROM users WHERE email = %s", (user_email,))
+        voter_id = cursor.fetchone()
+
+        if voter_id is None:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        # Check if the user has already voted this month
+        cursor.execute("""
+            SELECT 1 FROM votes 
+            WHERE voter_id = %s 
+            AND EXTRACT(YEAR FROM month_year) = EXTRACT(YEAR FROM CURRENT_DATE)
+            AND EXTRACT(MONTH FROM month_year) = EXTRACT(MONTH FROM CURRENT_DATE)
+        """, (voter_id,))
+
+        if cursor.fetchone():
+            return JSONResponse(content={"message": "You have already voted this month"}, status_code=403)
+
+        # Insert the vote into the database
+        cursor.execute("""
+            INSERT INTO votes (voter_id, nominee_id, month_year)
+            VALUES (%s, %s, CURRENT_DATE)
+        """, (voter_id, nominee_id))
+        connection.commit()
+
+        return JSONResponse(content={"message": "Vote cast successfully"}, status_code=200)
+
+    except Exception as e:
+        connection.rollback()  # Roll back the transaction on error
+        logging.error("Failed to cast vote: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to cast vote")
 

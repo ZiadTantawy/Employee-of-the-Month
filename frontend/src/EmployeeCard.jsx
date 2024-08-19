@@ -23,6 +23,28 @@ export default function EmployeeCard({ nominee }){
         }
         window.location.href = "/profile";
     };
+
+    async function handleVote(){
+        try{
+            const response = await fetch(`http://localhost:8000/vote/${encodeURIComponent(nominee.name)}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
+
+            if(response.status === 200){
+                alert("Vote cast successfully!");
+                window.location.reload();
+            }else{
+                alert("Failed to cast vote. Please try again.");
+            }
+        }catch(error){
+            console.error("Error casting vote:", error);
+            alert("Failed to cast vote. Please try again.");
+        }
+    }
     return (
         <div className="container4" >
             <div className="container4" style={{cursor:"pointer"}} onClick={Profile}>
@@ -31,10 +53,9 @@ export default function EmployeeCard({ nominee }){
                 </div>
                 <div className="info">
                     <h4>{nominee.name}</h4>
-                    <small>Data Scientist - 5 years experience</small>
                 </div>
             </div>
-            <a className="vote" style={{marginTop:"35px", marginLeft:"600px"}}>vote</a>
+            <a className="vote" style={{marginTop:"35px", marginLeft:"600px"}} onClick={handleVote}>vote</a>
         </div>
     )
 }

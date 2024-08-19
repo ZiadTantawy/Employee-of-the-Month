@@ -41,8 +41,23 @@ small {
     margin-left: 0px; /* Adds space between the image and text */
     width:160px
 }
-a:hover{
+
+.vote{
     color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.vote:hover {
+    color: whitesmoke;
     cursor: pointer;
+    background-color: #007bff;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
 }
 
