@@ -13,7 +13,7 @@ try:
     connection = psycopg2.connect(
         dbname='itworx',
         user='postgres',
-        password='mfht132465',
+        password='123',
         host='localhost',
     )
     cursor = connection.cursor()
@@ -76,8 +76,8 @@ def get_recent_winners():
         connection.rollback()  # Roll back the transaction on error
 
         logging.error("An unexpected error occurred: %s", e)
-        raise HTTPException(status_code=500, detail=f"Failed to fetch data from the database: {e}")
-
+        raise HTTPException(status_code=500, detail=f"Failed to fetch data from the database: {e}") 
+    
 @app.post("/login")
 def login(data: LoginData, request: Request):
     try:
@@ -234,16 +234,27 @@ def get_all_current_nominees():
 @app.post("/nominate")
 def nominate(data: NominationData):
     try:
-        cursor.execute("""
-            INSERT INTO nominations (nominee_name, nominee_email, nomination_reason, your_name, your_email)
-            VALUES (%s, %s, %s, %s, %s);
-        """, (data.nominee_name, data.nominee_email, data.nomination_reason, data.your_name, data.your_email))
+        nominee_query = "SELECT id FROM users WHERE email = %s"
+        cursor.execute(nominee_query, (data.nominee_email,))
+        nominee_id = cursor.fetchone()[0]
+        
+        nominator_query = "SELECT id FROM users WHERE email = %s"
+        cursor.execute(nominator_query, (data.your_email,))
+        nominator_id = cursor.fetchone()[0]
+        
+        insert_query = """
+            INSERT INTO nominations (nominee_id, nominator_id, nomination_reason, month_year)
+            VALUES (%s, %s, %s, CURRENT_DATE);
+        """
+        cursor.execute(insert_query, (nominee_id, nominator_id, data.nomination_reason))
         connection.commit()
         return JSONResponse(content={"message": "Nomination submitted successfully"}, status_code=200)
     except Exception as e:
         connection.rollback()  # Roll back the transaction on error
 
+        logging.error("Error submitting nomination: %s", e)
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
 
 @app.get("/check_email/{nomineeEmail}")
 def check_email(nomineeEmail: str):
@@ -253,5 +264,45 @@ def check_email(nomineeEmail: str):
         return JSONResponse(content={"exists": exists}, status_code=200)
     except Exception as e:
         connection.rollback()  # Roll back the transaction on error
-
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+    
+@app.get("/get_non_nominated_users")
+def get_non_nominated_users(request: Request):
+    if 'user' not in request.session:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    user_email = request.session['user']
+    try:
+        query = """
+            SELECT u.id, u.name, u.email 
+            FROM users u
+            LEFT JOIN nominations n ON u.id = n.nominee_id 
+            WHERE n.nominee_id IS NULL AND u.email != %s
+        """
+        cursor.execute(query, (user_email,))
+        users = cursor.fetchall()
+        result = [{"id": row[0], "name": row[1], "email": row[2]} for row in users]
+        return {"users": result}
+    except Exception as e:
+        logging.error("Failed to fetch data from database: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch data from database")
+
+@app.get("/get_current_user")
+def get_current_user(request: Request):
+    if 'user' in request.session:
+        try:
+            query = "SELECT name, email FROM users WHERE email = %s"
+            cursor.execute(query, (request.session['user'],))
+            user = cursor.fetchone()
+            if user:
+                return {"name": user[0], "email": user[1]}
+            else:
+                raise HTTPException(status_code=404, detail="User not found")
+        except Exception as e:
+            logging.error("Failed to fetch user data from database: %s", e)
+            raise HTTPException(status_code=500, detail="Failed to fetch user data from database")
+    else:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+

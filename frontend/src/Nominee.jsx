@@ -16,6 +16,7 @@ export default function Nominee({ nominee }) {
 
         window.location.href = `/profile`;
 
+        console.log(nomineeDataJson);
     }catch(error){
         console.error("Error getting nominee data:", error);
     }
