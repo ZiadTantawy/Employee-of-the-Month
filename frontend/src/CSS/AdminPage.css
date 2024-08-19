@@ -1,83 +1,180 @@
-/* Employee Votes Styles */
-  .employee-votes {
-    margin-left: 250px; /* Adjust for sidebar */
-    padding-top: 60px;
+/* Sidebar Styles */
+a {
+  text-decoration: none;
+}
+
+.admin-side-bar ul {
+  list-style: none;
+  padding: 0;
+  align-items: center;
+}
+
+.admin-side-bar {
+  width: 250px; /* Fixed width for sidebar */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items vertically */
+  margin-top: 20px;
+}
+
+.admin-side-link {
+  padding: 10px 20px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-side-link a {
+  color: #333;
+  text-decoration: none;
+}
+
+.admin-side-link:hover {
+  background-color: #e9ecef;
+}
+
+.admin-dates {
+  margin-top: auto; /* Move dates to the bottom */
+  padding: 10px 20px;
+  color: #6c757d;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column; /* Align dates vertically */
+}
+
+.admin-date {
+  margin-bottom: 10px;
+}
+
+.admin-subtitle {
+  font-size: 14px;
+  color: #495057;
+}
+
+.admin-pdate {
+  font-size: 16px;
+  color: #343a40;
+}
+
+/* Employee Votes Section */
+.admin-employee-votes {
+  margin-left: 250px; /* Adjusted for sidebar */
+  padding: 60px 20px 20px;
+  overflow-x: auto; /* Ensure horizontal overflow handling */
+}
+
+.admin-employee-votes h2,
+.admin-employee-votes h4 {
+  margin-bottom: 20px;
+}
+
+.admin-progress {
+  display: flex;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.admin-progress-bar {
+  background-color: #007bff;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  height: 20px;
+}
+
+/* Nominee Section */
+.admin-nominee {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.admin-nominee:hover {
+  background-color: #f1f1f1;
+}
+
+.admin-nominee img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.admin-text {
+  flex-grow: 1;
+}
+
+.admin-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 5px;
+}
+
+.admin-votes {
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.admin-percent {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #979797;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 1024px) {
+  .admin-employee-votes {
+    margin-left: 250px; /* Maintain sidebar width */
+    padding-left: 10px;
   }
-  
-  .nominee {
-    display: flex;
+
+  .admin-nominee {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-votes {
     flex-direction: row;
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: baseline;
   }
-  
-  .nominee img {
+}
+
+@media screen and (max-width: 768px) {
+  .admin-employee-votes {
+    margin-left: 250px; /* Maintain sidebar width */
+    padding: 60px 20px 20px;
+  }
+
+  .admin-nominee img {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
   }
-  
-  .nominee .text {
-    flex-grow: 1;
+}
+
+@media screen and (max-width: 480px) {
+  .admin-side-bar {
+    display: none; /* Hide sidebar on very small screens */
   }
-  
-  .nominee .text .name {
-    font-size: 20px;
-    font-weight: bold;
+
+  .admin-employee-votes {
+    padding: 10px;
+    margin-left: 0; /* Adjust margin for hidden sidebar */
   }
-  
-  .nominee .votes {
-    display: flex;
-    align-items: center;
-  }
-  
-  .nominee .percent {
-    margin-left: 10px;
-    font-size: 15px;
-    color: #979797;
-  }
-  
-  /* Responsive Styles */
-  @media screen and (max-width: 1024px) {
-    .employee-votes {
-      margin-left: 0;
-      padding-left: 10px;
-    }
-  
-    .employee-votes .nominee {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .nominee .votes {
-      flex-direction: row;
-      align-items: baseline;
-    }
-  }
-  
-  @media screen and (max-width: 768px) {
-    .side-bar {
-      width: 100%;
-    }
-  
-    .employee-votes {
-      padding: 10px;
-    }
-  
-    .employee-votes .nominee img {
-      width: 30px;
-      height: 30px;
-    }
-  }
-  
-  @media screen and (max-width: 480px) {
-    .side-bar {
-      display: none; /* Hide sidebar on very small screens */
-    }
-  
-    .employee-votes {
-      padding: 10px;
-    }
-  }
-  
+}
