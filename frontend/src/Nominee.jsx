@@ -24,7 +24,7 @@ export default function Nominee({ nominee }) {
 
   return (
     <div className="nominationContainer" onClick={Profile}>
-      <img className="photo" alt="Profile Picture" src="PIC/profilePicture.jpg" />
+      <img className="photo" alt="Profile Picture" src={`data:image/jpeg;base64,${nominee.image}`} />
       <div className="info">
         <h4>{nominee.name}</h4>
         <small>{nominee.nomination_reason}</small>

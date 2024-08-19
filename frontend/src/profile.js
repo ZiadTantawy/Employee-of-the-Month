@@ -9,7 +9,7 @@ const Profile = () => {
     <main>
       <div className="profile-container">
         <div className="profile">
-          <img src="./PIC/profilePic.jpg" className='card-img' alt="John Smith" />
+          <img src={`data:image/jpeg;base64,${employeeData.image}`} className='card-img' alt="John Smith" />
           <div className='profile-info'>
             <h3 className='name'>{employeeData.nominee_name}</h3>
             <p className='role'>Software Engineer</p>
