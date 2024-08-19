@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import './CSS/AdminPage.css';
 import { useNavigate, Link } from "react-router-dom";
 import './CSS/AdminPage.css';
 
@@ -7,6 +8,12 @@ const AdminPage = () => {
   const [error, setError] = useState(null); // For error handling
   const [nominees, setNominees] = useState([]);
   const navigate = useNavigate();
+  const startDate = new Date();
+  startDate.setFullYear(startDate.getFullYear(), startDate.getMonth(), 1);
+  const formattedStartDate = startDate.toDateString(); // Convert to a string
+const endDate = new Date();
+endDate.setFullYear(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+const formattedEndDate = endDate.toDateString(); // Convert to a string
 
   useEffect(() => {
     const checkAdminStatus = async () => {
@@ -82,11 +89,11 @@ return (
             <div className="admin-dates">
                 <div className="admin-date">
                     <p className="admin-subtitle">Vote Started on</p>
-                    <p className="admin-pdate">August 1, 2024</p>
+                    <p className="admin-pdate">{formattedStartDate}</p>
                 </div>
                 <div className="admin-date">
                     <p className="admin-subtitle">Vote ends on</p>
-                    <p className="admin-pdate">August 30, 2024</p>
+                    <p className="admin-pdate">{formattedEndDate}</p>
                 </div>
             </div>
         </div>

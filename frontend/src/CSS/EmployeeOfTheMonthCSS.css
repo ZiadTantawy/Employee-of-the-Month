@@ -14,6 +14,7 @@ small {
     margin-bottom: 0;
     display: flex; /* Ensures content aligns horizontally */
     align-items: center; /* Centers items vertically */
+    justify-content: space-between;
 }
 
 .profilePhoto {
@@ -49,6 +50,7 @@ small {
     padding: 5px 10px;
     margin-left: 10px;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    align-items: flex-end;
 }
 
 .vote:hover {
