@@ -15,7 +15,7 @@ try:
     connection = psycopg2.connect(
         dbname='itworx',
         user='postgres',
-        password='123',
+        password='1234',
         host='localhost',
     )
     cursor = connection.cursor()
@@ -36,7 +36,7 @@ app.add_middleware(
 )
 
 # try:
-#     drawing = open("C:\\Users\\hp\\Documents\\Programming Projects\\Web Projects\\ItworxProject\\ITWorx\\frontend\\src\\PIC\\2.jpg", 'rb').read() 
+#     drawing = open("D:\\My Learning\\My repos\\WebDev Projects\\ITWorx\\frontend\\src\PIC\\2.jpg", 'rb').read() 
 
 #     query = """
 # UPDATE users
@@ -48,7 +48,7 @@ app.add_middleware(
 # except Exception as e:
 #     print("error",e)
 # try:
-#     drawing = open("C:\\Users\\hp\\Documents\\Programming Projects\\Web Projects\\ItworxProject\\ITWorx\\frontend\\src\\PIC\\3.jpg", 'rb').read() 
+#     drawing = open("D:\\My Learning\\My repos\\WebDev Projects\\ITWorx\\frontend\\src\PIC\\2.jpg", 'rb').read() 
 
 #     query = """
 # UPDATE users
@@ -60,7 +60,7 @@ app.add_middleware(
 # except Exception as e:
 #     print("error",e)
 # try:
-#     drawing = open("C:\\Users\\hp\\Documents\\Programming Projects\\Web Projects\\ItworxProject\\ITWorx\\frontend\\src\\PIC\\4.jpg", 'rb').read() 
+#     drawing = open("D:\\My Learning\\My repos\\WebDev Projects\\ITWorx\\frontend\\src\PIC\\2.jpg", 'rb').read() 
 
 #     query = """
 # UPDATE users
@@ -226,7 +226,7 @@ def get_employee_data(nomineeName: str) -> dict:
         query = "SELECT users.id FROM users WHERE users.name = %s"
         cursor.execute(query, (nomineeName,))
         nomineeID = cursor.fetchone()[0]
-        query = """select users.name, users.email, nominations.nomination_reason, users.image
+        query = """select users.name, users.email, nominations.nomination_reason, users.image, users.job_title
 from users
 inner join nominations on nominations.nominee_id = users.id
 where users.id = %s"""
@@ -238,7 +238,8 @@ where users.id = %s"""
                 "nominee_name": nominee[0],
                 "nominee_email": nominee[1],
                 "nomination_reason": nominee[2],
-                "image": base64.b64encode(nominee[3]).decode('utf-8') if nominee[3] else None
+                "image": base64.b64encode(nominee[3]).decode('utf-8') if nominee[3] else None,
+                "job_title": nominee[4]
             }
         else:
             # Return a 404 error if no record is found
@@ -526,4 +527,3 @@ def vote_for_nominee(nomineeName: str, request: Request):
         connection.rollback()  # Roll back the transaction on error
         logging.error("Failed to cast vote: %s", e)
         raise HTTPException(status_code=500, detail="Failed to cast vote")
-
